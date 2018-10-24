@@ -1,0 +1,31 @@
+{
+  "author": "http://imaginacolombia.com/",
+  "bugs": {
+    "url": "https://github.com/imagina/qslider/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "localforage": "^1.7.2"
+  },
+  "deprecated": false,
+  "description": "Menu components for use in quasar",
+  "homepage": "https://github.com/imagina/qslider#readme",
+  "keywords": [
+    "quasar",
+    "laravel",
+    "asgardcms",
+    "passport"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "@imagina/qslider",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imagina/qslider.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.0.2"
+}
