@@ -1,7 +1,7 @@
 <template>
   <div id="carousel" v-if="slides && slides.length">
     <q-carousel class="text-white"
-                infinite
+                infinite autoplay
                 :height="this.$q.platform.is.desktop ? '500px' : '320px'">
       <!--= Slides =-->
       <q-carousel-slide :img-src="slide.imageUrl"

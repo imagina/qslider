@@ -67,5 +67,7 @@
       padding 20px auto
       .VueCarousel-navigation-button
         font-size 31px
+      i
+        color $grey-6 !important
 
 </style>
