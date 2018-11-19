@@ -1,5 +1,36 @@
 {
-  "author": "http://imaginacolombia.com/",
+  "_args": [
+    [
+      "@imagina/qslider@0.0.4",
+      "D:\\Imagina\\html\\Applications\\vime_app"
+    ]
+  ],
+  "_from": "@imagina/qslider@0.0.4",
+  "_id": "@imagina/qslider@0.0.4",
+  "_inBundle": false,
+  "_integrity": "sha512-W3ZEAvSbmE83jHkIUxEKYM5kJJWoCXihDoql9SfWdFqiT/c64FZsRL9nsQSa815rYNDS/wG0AWIr6Wvut3gp0g==",
+  "_location": "/@imagina/qslider",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "@imagina/qslider@0.0.4",
+    "name": "@imagina/qslider",
+    "escapedName": "@imagina%2fqslider",
+    "scope": "@imagina",
+    "rawSpec": "0.0.4",
+    "saveSpec": null,
+    "fetchSpec": "0.0.4"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@imagina/qslider/-/qslider-0.0.4.tgz",
+  "_spec": "0.0.4",
+  "_where": "D:\\Imagina\\html\\Applications\\vime_app",
+  "author": {
+    "name": "http://imaginacolombia.com/"
+  },
   "bugs": {
     "url": "https://github.com/imagina/qslider/issues"
   },
@@ -27,5 +58,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "0.0.3"
+  "version": "0.0.4"
 }
