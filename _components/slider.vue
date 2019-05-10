@@ -20,7 +20,7 @@
           </div>
         </div>
       </q-carousel-slide>
-
+      
       <!--= Controls =-->
       <q-carousel-control slot="control-nav"
                           class="q-container"
@@ -43,7 +43,6 @@
 <script>
   /*Services*/
   import sliderServices from '@imagina/qslider/_services/slider'
-
   export default {
     props: {
       id : {default:1}
@@ -67,7 +66,6 @@
         })
       }
     }
-
   }
 </script>
 <style lang="stylus">
@@ -78,7 +76,6 @@
       .filter-img
         height 100%
         width 100%
-
     .q-carousel-control
       margin 0 !important
       padding 0 !important

@@ -24,7 +24,6 @@
 <script>
   /*Services*/
   import sliderServices from '@imagina/qslider/_services/slider'
-
   export default {
     props: {
       id : {default: 2}
@@ -48,12 +47,10 @@
         })
       }
     }
-
   }
 </script>
 <style lang="stylus">
   @import "~variables";
-
   #marcasComponent
     text-align center
     border-top 1px solid $grey-11
@@ -69,5 +66,4 @@
         font-size 31px
       i
         color $grey-6 !important
-
 </style>
