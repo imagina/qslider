@@ -1,7 +1,7 @@
 {
   "_args": [
     [
-      "@imagina/qslider@0.0.7",
+      "@imagina/qslider@0.0.8",
       "D:\\Imagina\\html\\Applications\\vime_app"
     ]
   ],
@@ -12,8 +12,8 @@
     "axios": "^0.18.0",
     "localforage": "^1.7.2"
   },
-  "_from": "@imagina/qslider@0.0.7",
-  "_id": "@imagina/qslider@0.0.7",
+  "_from": "@imagina/qslider@0.0.8",
+  "_id": "@imagina/qslider@0.0.8",
   "_inBundle": false,
   "_integrity": "sha512-W3ZEAvSbmE83jHkIUxEKYM5kJJWoCXihDoql9SfWdFqiT/c64FZsRL9nsQSa815rYNDS/wG0AWIr6Wvut3gp0g==",
   "_location": "/@imagina/qslider",
@@ -21,19 +21,19 @@
   "_requested": {
     "type": "version",
     "registry": true,
-    "raw": "@imagina/qslider@0.0.7",
+    "raw": "@imagina/qslider@0.0.8",
     "name": "@imagina/qslider",
     "escapedName": "@imagina%2fqslider",
     "scope": "@imagina",
-    "rawSpec": "0.0.7",
+    "rawSpec": "0.0.8",
     "saveSpec": null,
-    "fetchSpec": "0.0.7"
+    "fetchSpec": "0.0.8"
   },
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/@imagina/qslider/-/qslider-0.0.7.tgz",
-  "_spec": "0.0.7",
+  "_resolved": "https://registry.npmjs.org/@imagina/qslider/-/qslider-0.0.8.tgz",
+  "_spec": "0.0.8",
   "_where": "D:\\Imagina\\html\\Applications\\vime_app",
   "author": {
     "name": "http://imaginacolombia.com/"
@@ -62,5 +62,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "0.0.7"
+  "version": "0.0.8"
 }

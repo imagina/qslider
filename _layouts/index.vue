@@ -73,14 +73,30 @@
             </q-toggle>
             
             <!--== Slider Edit ==-->
-            <q-btn icon="fas fa-pen" color="positive" round size="xs" class="q-mx-xs" @click="showSliderModal(slider)">
+            <q-btn
+              icon="fas fa-pen"
+              color="positive"
+              round
+              size="xs"
+              class="q-mx-xs"
+              @click="showSliderModal(slider)"
+              v-if="$auth.hasAccess('slider.sliders.edit')"
+            >
               <q-tooltip :offset="[5, 5]">
                 Edit
               </q-tooltip>
             </q-btn>
             
             <!--== Slider Delete ==-->
-            <q-btn icon="far fa-trash-alt" color="negative" size="xs" class="q-mx-xs" round @click="dialogDeleteSlider.handler(slider.id)">
+            <q-btn
+              icon="far fa-trash-alt"
+              color="negative"
+              size="xs"
+              class="q-mx-xs"
+              round
+              @click="dialogDeleteSlider.handler(slider.id)"
+              v-if="$auth.hasAccess('slider.sliders.destroy')"
+            >
               <q-tooltip :offset="[5, 5]">
                 Delete
               </q-tooltip>
@@ -111,9 +127,7 @@
         :data="dataTable"
         :columns="columns"
         :pagination.sync="pagination"
-
         row-key="filename"
-        color="secondary"
         @request="getData"
       >
  
@@ -137,8 +151,23 @@
             </q-tooltip>
           </q-toggle>
           
-          <q-btn icon="fas fa-pen" color="positive" round size="xs" class="q-mx-xs" @click="showSliderModal(props.row)"/>
-          <q-btn icon="far fa-trash-alt" color="negative" size="xs" class="q-mx-xs" round @click="dialogDeleteSlider.handler(props.row.id)"/>
+          <q-btn
+            icon="fas fa-pen"
+            color="positive"
+            round
+            size="xs"
+            class="q-mx-xs"
+            @click="showSliderModal(props.row)"
+            v-if="$auth.hasAccess('slider.sliders.edit')" />
+          
+          <q-btn
+            icon="far fa-trash-alt"
+            color="negative"
+            size="xs"
+            class="q-mx-xs"
+            round
+            @click="dialogDeleteSlider.handler(props.row.id)"
+            v-if="$auth.hasAccess('slider.sliders.destroy')" />
         </q-td>
     
       </q-table>
@@ -186,7 +215,7 @@
               
                 </div>
               </draggable>
-              <q-btn icon="add" color="primary" round size="xs" class="q-mx-xs" @click="showSlideModal(false)" >
+              <q-btn icon="add" color="positive" round size="xs" class="q-mx-xs" @click="showSlideModal(false)" >
                 <q-tooltip :offset="[5, 5]">
                   Add Slide
                 </q-tooltip>
@@ -199,6 +228,7 @@
               </q-field>
             
               <q-field
+                v-if="$auth.hasAccess('slider.sliders.edit-system-name')"
               >
                 <q-input float-label="System Name" type="text" v-model="sliderToEdit.systemName" />
               </q-field>
@@ -326,7 +356,8 @@
         </div>
       </q-modal-layout>
     </q-modal>
-    <q-page-sticky position="bottom-right" :offset="[18, 18]">
+    
+    <q-page-sticky position="bottom-right" :offset="[18, 18]" v-if="$auth.hasAccess('slider.sliders.create')">
       <q-btn round color="positive" icon="add" @click="showSliderModal(false)"/>
     </q-page-sticky>
   </div>

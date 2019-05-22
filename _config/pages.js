@@ -9,7 +9,7 @@ import access from '@imagina/quser/_router/middlewares/access'
 export default {
   //Home Page
   index: {
-    permission: 'slider.sliders.index',
+    permission: 'slider.sliders.manage',
     activated: true,
     path: '/slider/index',
     name: 'app.slider.index',
@@ -17,6 +17,6 @@ export default {
     containerLayout: master,
     title: 'Slider',
     icon: 'fas fa-list-alt',
-    middleware: [auth]
+    middleware: [auth,access]
   },
 }
