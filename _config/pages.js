@@ -16,7 +16,7 @@ export default {
     layout: require('@imagina/qslider/_layouts/index').default,
     containerLayout: master,
     title: 'Slider',
-    icon: 'fas fa-list-alt',
+    icon: 'fas fa-images',
     middleware: [auth,access]
   },
 }
