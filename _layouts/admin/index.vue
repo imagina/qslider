@@ -1,12 +1,11 @@
 <template>
-  <div id="sliderIndex"
-       class="q-layout-page row layout-padding">
+  <div id="sliderIndex" class="q-layout-page row layout-padding">
+
     <!--TITLE-->
     <h1 class="q-headline text-primary">
-      <q-icon name="fas fa-images"></q-icon>
-      Sliders
+      <q-icon :name="$route.meta.icon"></q-icon>
+      {{$tr($route.meta.title)}}
     </h1>
-
 
     <div class="col-12 text-right backend-page relative-position">
       <div class="border-top-color row shadow-1" style="padding: 0px !important;">
@@ -33,12 +32,13 @@
             />
           </q-btn-group>
           <!--Button new record-->
-          <q-btn icon="fas fa-edit" color="positive" label="New Slider"
+          <q-btn icon="fas fa-edit" color="positive" :label="$tr('qslider.layout.newSlider')"
                  @click="showSliderModal(false)" v-if="$auth.hasAccess('slider.sliders.create')"/>
           <!--Button refresh data-->
           <q-btn color="info" icon="fas fa-sync" class="q-ml-sm"
-                 @click="getData({pagination:pagination,search:filter.search},true)"
-          ></q-btn>
+                 @click="getData({pagination:pagination,search:filter.search},true)">
+            <q-tooltip>{{$tr('ui.label.refresh')}}</q-tooltip>
+          </q-btn>
         </div>
 
         <!--== Carousels ==-->
@@ -70,18 +70,12 @@
                 </q-carousel-control>
               </q-carousel>
               <div class="row q-py-xs justify-end bg-grey-3">
-                <!--== Slider Active ==-->
-                <q-toggle v-model="slider.active" @input="updateOrCreateSlider(slider)">
-                  <q-tooltip :offset="[5, 5]">
-                    {{slider.active ? 'Unactive' : 'Active'}}
-                  </q-tooltip>
-                </q-toggle>
 
                 <!--== Slider Edit ==-->
                 <q-btn icon="fas fa-pen" color="positive" size="sm" class="q-mx-xs"
                        @click="showSliderModal(slider)" v-if="$auth.hasAccess('slider.sliders.edit')">
                   <q-tooltip :offset="[5, 5]">
-                    Edit
+                    {{$tr('ui.label.edit')}}
                   </q-tooltip>
                 </q-btn>
 
@@ -90,7 +84,7 @@
                        class="q-mx-xs" @click="dialogDeleteSlider.handler(slider.id)"
                        v-if="$auth.hasAccess('slider.sliders.destroy')">
                   <q-tooltip :offset="[5, 5]">
-                    Delete
+                    {{$tr('ui.label.delete')}}
                   </q-tooltip>
                 </q-btn>
               </div>
@@ -157,163 +151,143 @@
       <inner-loading :visible="loading"/>
     </div>
 
-
-    <q-modal v-model="modalSlider"
-             v-if="sliderToEdit"
-             id="sliderModalEdit"
-             :content-css="{minWidth: '80vw', minHeight: '80vh'}">
-      <q-modal-layout>
+    <q-modal v-model="modalSlider" v-if="sliderToEdit" id="sliderModalEdit"
+             :content-css="{minWidth: '80vw', minHeight: '80vh'}" class="backend-page">
+      <q-modal-layout class="relative-position">
         <q-toolbar slot="header">
-          <q-btn
-            flat
-            round
-            dense
-            v-close-overlay
-            @click="getData({pagination:pagination,search:filter.search},true)"
-            icon="keyboard_arrow_left"
-          />
-          <q-toolbar-title>
-            Edit Slider
+          <q-toolbar-title v-if="sliderToEdit">
+            {{$tr('qslider.layout.updateSlider')}}
           </q-toolbar-title>
+          <q-toolbar-title v-else>{{$tr('qslider.layout.createSlider')}}</q-toolbar-title>
+          <q-btn flat v-close-overlay icon="fas fa-times"/>
         </q-toolbar>
 
+        <q-toolbar slot="footer" color="white">
+          <q-toolbar-title></q-toolbar-title>
+          <q-btn color="positive" :label="$tr('ui.label.save')" :loading="loading"
+                 @click="updateOrCreateSlider(sliderToEdit)"/>
+        </q-toolbar>
 
         <div class="layout-padding">
           <div class="row gutter-md">
             <div v-if="sliderToEdit.id" class="col-12 col-md-7 text-right">
-
-
+              <!--Button add new-->
+              <q-btn icon="add" color="positive" class="q-mx-xs btn-small"
+                     @click="showSlideModal(false)" :label="$tr('qslider.layout.newSlide')"/>
+              <!---Draggable-->
               <draggable v-model="sliderToEdit.slides" group="slides">
                 <div v-for="(slide,index) in sliderToEdit.slides" :key="'slide'+index"
                      :style="'background-image: url('+slide.imageUrl+'); position:relative'"
                      class="image border q-my-sm col-12 col-sm-4 col-md-3">
-
                   <div style="bottom: 5px; right: 5px; position: absolute;">
-                    <q-btn icon="fas fa-pen" color="positive" round size="xs" class="q-mx-xs"
-                           @click="showSlideModal(slide)"/>
-                    <q-btn icon="far fa-trash-alt" color="negative" size="xs" class="q-mx-xs" round
-                           @click="deleteSlide(slide.id, index)"/>
-
+                    <q-btn icon="fas fa-pen" color="positive" size="xs" class="q-mx-xs"
+                           @click="showSlideModal(slide)">
+                      <q-tooltip>{{$tr('ui.label.edit')}}</q-tooltip>
+                    </q-btn>
+                    <q-btn icon="far fa-trash-alt" color="negative" size="xs" class="q-mx-xs"
+                           @click="deleteSlide(slide.id, index)">
+                      <q-tooltip>{{$tr('ui.label.delete')}}</q-tooltip>
+                    </q-btn>
                   </div>
-
-
                 </div>
               </draggable>
-              <q-btn icon="add" color="positive" round size="xs" class="q-mx-xs" @click="showSlideModal(false)">
-                <q-tooltip :offset="[5, 5]">
-                  Add Slide
-                </q-tooltip>
-              </q-btn>
             </div>
             <div :class="'col-12 '+ (sliderToEdit.id ? 'col-md-5' : '')">
-              <q-field
-              >
-                <q-input float-label="Name" type="text" v-model="sliderToEdit.name"/>
+              <q-field :error="$v.sliderToEdit.name.$error"
+                       :error-label="$tr('ui.message.fieldRequired')">
+                <q-input :stack-label="`${$tr('ui.form.name')} *`" type="text"
+                         @input="setSlug()" v-model="sliderToEdit.name"/>
               </q-field>
-
-              <q-field
-                v-if="$auth.hasAccess('slider.sliders.edit-system-name')"
-              >
-                <q-input float-label="System Name" type="text" v-model="sliderToEdit.systemName"/>
+              <q-field :error="$v.sliderToEdit.systemName.$error"
+                       :error-label="$tr('ui.message.fieldRequired')">
+                <!--System Name-->
+                <q-input :stack-label="`${$tr('ui.form.slug')} *`" type="text"
+                         v-model="sliderToEdit.systemName"/>
               </q-field>
               <!--== Slide Active ==-->
-              <q-toggle label="Active" v-model="sliderToEdit.active" class="q-my-sm">
-                <q-tooltip :offset="[5, 5]">
-                  {{sliderToEdit.active ? 'Unactive' : 'Active'}}
-                </q-tooltip>
-              </q-toggle>
+              <q-select :stack-label="$tr('ui.form.status')"
+                        v-model="sliderToEdit.active"
+                        :options="[
+                          {label : $tr('ui.label.enabled'), value : true},
+                          {label : $tr('ui.label.disabled'), value : false},
+                        ]"/>
             </div>
-            <div class="col-12 text-center">
-              <q-btn color="primary" label="Save" @click="updateOrCreateSlider(sliderToEdit); modalSlider = false"/>
-            </div>
-
           </div>
-
         </div>
+
+        <!--Loading-->
+        <inner-loading :visible="loading"/>
       </q-modal-layout>
     </q-modal>
 
-
     <q-modal v-model="modalSlide"
-
              :key="slideToEdit.id ? slideToEdit.id : ''"
-             id="sliderModalEdit"
+             id="sliderModalEdit" class="backend-page"
              :content-css="{minWidth: '80vw', minHeight: '80vh'}">
       <q-modal-layout>
+
         <q-toolbar slot="header">
-          <q-btn
-            flat
-            round
-            dense
-            v-close-overlay
-            icon="keyboard_arrow_left"
-          />
-          <q-toolbar-title>
-            Edit Slide
-          </q-toolbar-title>
+          <q-toolbar-title>{{$tr('qslider.layout.updateSlide')}}</q-toolbar-title>
+          <q-btn flat v-close-overlay icon="fas fa-times"/>
+        </q-toolbar>
+
+        <q-toolbar slot="footer" color="white">
+          <q-toolbar-title/>
+          <q-btn color="positive" :label="$tr('ui.label.save')" icon="fas fa-save"
+                 @click="updateOrCreateSlide(); modalSlide = false"/>
         </q-toolbar>
 
 
         <div class="layout-padding">
           <locales v-model="locale"></locales>
-
           <div class="row gutter-xs" v-if="locale.success">
-
-            <div class="col-12">
-              <q-field
-              >
-                <q-input :float-label="'Title ('+locale.language+')'" type="text" v-model="locale.formTemplate.title"/>
+            <div class="col-12 col-md-7">
+              <q-field>
+                <q-input :stack-label="`${$tr('ui.form.title')} (${locale.language}) `"
+                         type="text" v-model="locale.formTemplate.title"/>
               </q-field>
-              <q-field
-              >
-                <q-input :float-label="'Caption ('+locale.language+')'" type="text"
+              <q-field>
+                <q-input :stack-label="`${$tr('ui.form.caption')} (${locale.language}) `"
+                         type="text"
                          v-model="locale.formTemplate.caption"/>
               </q-field>
-
-              <q-field
-              >
-                <q-input :float-label="'URI ('+locale.language+')'" type="text" v-model="locale.formTemplate.uri"/>
+              <q-field>
+                <q-input :stack-label="'URI ('+locale.language+')'"
+                         type="text" v-model="locale.formTemplate.uri"/>
               </q-field>
-
-              <q-field
-              >
-                <q-input :float-label="'URL ('+locale.language+')'" type="text" v-model="locale.formTemplate.url"/>
+              <q-field>
+                <q-input :stack-label="'URL ('+locale.language+')'" type="text" v-model="locale.formTemplate.url"/>
               </q-field>
-              <q-field
-              >
-                <q-input :float-label="'External Image Url ('+locale.language+')'" type="text"
+              <q-field>
+                <q-input :stack-label="`${$tr('ui.form.image')} URL (${locale.language}) `"
+                         type="text"
                          v-model="locale.formTemplate.externalImageUrl"/>
               </q-field>
-
-              <q-field
-              >
-                <q-editor :float-label="'Custom HTML ('+locale.language+')'" v-model="locale.formTemplate.customHtml"/>
-
+              <q-field>
+                <div class="input-title">{{`${$tr('ui.form.description')} (${locale.language}) `}}</div>
+                <q-editor :stack-label="'Custom HTML ('+locale.language+')'" v-model="locale.formTemplate.customHtml"/>
               </q-field>
-
+            </div>
+            <div class="col-12 col-md-5">
               <!--== Slide Active ==-->
-              <q-toggle :label="'Active ('+locale.language+')'" v-model="locale.formTemplate.active" class="q-my-sm">
-                <q-tooltip :offset="[5, 5]">
-                  {{locale.formTemplate.active ? 'Unactive' : 'Active'}}
-                </q-tooltip>
-              </q-toggle>
-
-              <q-field
-              >
+              <q-select :stack-label="`${$tr('ui.form.status')} (${locale.language})`"
+                        v-model="locale.formTemplate.active"
+                        :options="[
+                          {label : $tr('ui.label.enabled'), value : true},
+                          {label : $tr('ui.label.disabled'), value : false},
+                        ]"/>
+              <q-field>
                 <q-select
-                  float-label="Target"
+                  :stack-label="`${$tr('ui.form.option')}`"
                   v-model="locale.formTemplate.target"
                   :options="[
                   {value: '_self', label: 'Same tab'},
                   {value: '_blank', label: 'New tab'}
                   ]"/>
-
               </q-field>
-
-              <q-field
-              >
+              <q-field>
                 <q-select
-                  float-label="Type"
+                  :stack-label="`${$tr('ui.form.type')}`"
                   v-model="locale.formTemplate.type"
                   :options="[
                   {value: 'auto', label: 'Auto'},
@@ -321,24 +295,17 @@
                   {value: 'video', label: 'Video'},
                   {value: 'image', label: 'Image'}
                   ]"/>
-
               </q-field>
+              <div class="input-title">{{`${$tr('ui.form.image')}`}}</div>
               <media-form
                 entity="Modules\Slider\Entities\Slide"
                 :entity-id="slideToEdit.id ? slideToEdit.id : ''"
                 v-model="locale.formTemplate.mediasSingle"
-                label="Slide Image"
                 zone="slideimage"
                 :key="mediaKey"
               />
-
             </div>
-            <div class="col-12 text-center">
-              <q-btn color="primary" label="Save" @click="updateOrCreateSlide(); modalSlide = false"/>
-            </div>
-
           </div>
-
         </div>
       </q-modal-layout>
     </q-modal>
@@ -346,11 +313,12 @@
 </template>
 <script>
   /*Plugins*/
-  import {alert} from '@imagina/qhelper/_plugins/alert'
+  import alert from '@imagina/qhelper/_plugins/alert'
   import {uid} from 'quasar'
 
   /*Services*/
   import sliderService from '@imagina/qslider/_services/index'
+  import {required} from 'vuelidate/lib/validators'
 
   /*Components*/
   import draggable from 'vuedraggable'
@@ -367,7 +335,14 @@
       innerLoading
     },
     watch: {},
-    computed: {},
+    validations() {
+      return {
+        sliderToEdit: {
+          name: {required},
+          systemName: {required}
+        }
+      }
+    },
     mounted() {
       this.$nextTick(function () {
         this.getData({pagination: this.pagination, search: this.filter.search});
@@ -387,7 +362,7 @@
           fieldsTranslatable: {
             title: '',
             caption: '',
-            active: false,
+            active: true,
             url: '',
             uri: '',
             customHtml: '',
@@ -440,13 +415,13 @@
         ],
       }
     },
+    computed: {},
     methods: {
       async getData({pagination, search}, refresh = false) {
-
         this.loading = true
         // clear storage cache
         if (refresh)
-          this.$helper.clearCache('apiRoutes.slider.sliders')
+          this.$helper.clearCache('apiRoutes.qslider.sliders')
 
         let params = {
           params: {
@@ -461,7 +436,7 @@
         }
 
         // index all media by params
-        sliderService.crud.index('apiRoutes.slider.sliders', params).then(response => {
+        this.$crud.index('apiRoutes.qslider.sliders', params).then(response => {
           this.dataTable = response.data
 
           this.pagination.rowsPerPage = response.meta.page.perPage;
@@ -474,8 +449,10 @@
           }
 
           this.loading = false
+        }).catch(error => {
+          this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+          this.loading = false//hide loading
         })
-
       },
 
       showSliderModal(slider) {
@@ -486,7 +463,7 @@
           this.sliderToEdit = {
             name: '',
             systemName: '',
-            active: false,
+            active: true,
             slides: []
           }
         }
@@ -494,7 +471,6 @@
       },
 
       showSlideModal(slide) {
-
         if (slide) {
           //slide.mediasSingle = {}
           this.slideToEdit = slide
@@ -503,7 +479,7 @@
           this.locale.form = this.slideToEdit = {
             title: '',
             caption: '',
-            active: false,
+            active: 1,
             url: '',
             uri: '',
             customHtml: '',
@@ -521,44 +497,52 @@
       },
 
       updateOrCreateSlider(data) {
-        this.loading = true
-        if (this.sliderToEdit.id) {
-          sliderService.crud.update('apiRoutes.slider.sliders', data.id, data).then(response => {
-            alert.success('Slider updated', 'top')
-            this.getData({pagination: this.pagination, search: this.filter.search}, true)
-
-          }).catch(error => {
-            alert.error('Slider not updated', 'bottom', false, 2500)
-            this.loading = false
-          })
+        this.$v.$touch()//Validate component locales
+        //Check validations
+        if (!this.$v.$error) {
+          this.loading = true
+          if (this.sliderToEdit.id) {
+            this.$crud.update('apiRoutes.qslider.sliders', data.id, data).then(response => {
+              this.$alert.success({message: this.$tr('ui.message.recordUpdated')})
+              this.getData({pagination: this.pagination, search: this.filter.search}, true)
+              this.modalSlider = false
+              this.$v.$reset()
+            }).catch(error => {
+              this.$alert.error({message: this.$tr('ui.message.recordNoUpdated')})
+              this.loading = false
+            })
+          } else {
+            this.$crud.create('apiRoutes.qslider.sliders', data).then(response => {
+              this.$alert.success({message: `${this.$tr('ui.message.recordCreated')}`})
+              this.getData({pagination: this.pagination, search: this.filter.search}, true)
+              this.modalSlider = false
+              this.$v.$reset()
+            }).catch(error => {
+              this.$alert.error({message: `${this.$tr('ui.message.recordNoCreated')}`})
+              this.loading = false
+            })
+          }
         } else {
-          sliderService.crud.create('apiRoutes.slider.sliders', data).then(response => {
-            alert.success('Slider created', 'top')
-            this.getData({pagination: this.pagination, search: this.filter.search}, true)
-
-          }).catch(error => {
-            alert.error('Slider not created', 'bottom', false, 2500)
-            this.loading = false
-          })
+          this.$alert.error({message: this.$tr('ui.message.formInvalid'), pos: 'bottom'})
         }
       },
 
       updateOrCreateSlide() {
         this.loading = true
         if (this.slideToEdit.id) {
-          sliderService.crud.update('apiRoutes.slider.slides', this.slideToEdit.id, this.locale.form).then(response => {
-            alert.success('Slide updated', 'top')
+          this.$crud.update('apiRoutes.qslider.slides', this.slideToEdit.id, this.locale.form).then(response => {
+            this.$alert.success({message: this.$tr('ui.message.recordUpdated')})
             this.getData({pagination: this.pagination, search: this.filter.search}, true)
           }).catch(error => {
-            alert.error('Slide not updated', 'bottom', false, 2500)
+            this.$alert.error({message: this.$tr('ui.message.recordNoUpdated')})
             this.loading = false
           })
         } else {
-          sliderService.crud.create('apiRoutes.slider.slides', this.locale.form).then(response => {
-            alert.success('Slide created', 'top')
+          this.$crud.create('apiRoutes.qslider.slides', this.locale.form).then(response => {
+            this.$alert.success({message: `${this.$tr('ui.message.recordCreated')}`})
             this.getData({pagination: this.pagination, search: this.filter.search}, true)
           }).catch(error => {
-            alert.error('Slide not created', 'bottom', false, 2500)
+            this.$alert.error({message: `${this.$tr('ui.message.recordNoCreated')}`})
             this.loading = false
           })
         }
@@ -567,26 +551,35 @@
 
       deleteSlider(id) {
         this.loading = true
-        sliderService.crud.delete('apiRoutes.slider.sliders', id).then(response => {
-          alert.success('Slider Deleted', 'top')
+        this.$crud.delete('apiRoutes.qslider.sliders', id).then(response => {
+          this.$alert.success({message: this.$tr('ui.message.recordDeleted')})
           this.getData({pagination: this.pagination, search: this.filter.search}, true)
         }).catch(error => {
-          alert.error('Slider not deleted', 'bottom', false, 2500)
+          this.$alert.error({message: this.$tr('ui.message.recordNoDeleted'), pos : 'bottom'})
           this.loading = false
         })
       },
 
       deleteSlide(slideId, pos) {
         this.loading = true
-        sliderService.crud.delete('apiRoutes.slider.slides', slideId).then(response => {
-          alert.success('Slide Deleted', 'top')
+        this.$crud.delete('apiRoutes.qslider.slides', slideId).then(response => {
+          this.$alert.success({message: this.$tr('ui.message.recordDeleted')})
           this.sliderToEdit.slides.splice(pos, 1);
           this.getData({pagination: this.pagination, search: this.filter.search}, true)
         }).catch(error => {
-          alert.error('Slide not deleted', 'bottom', false, 2500)
+          this.$alert.error({message: this.$tr('ui.message.recordNoDeleted'), pos : 'bottom'})
           this.loading = false
         })
-      }
+      },
+
+      //Complete slug Only when is creation
+      setSlug() {
+        if (!this.sliderToEdit.id) {
+          //Set slug as title
+          let slug = this.sliderToEdit.name.trim().split(' ').join('-').toLowerCase()
+          this.sliderToEdit.systemName = this.$clone(slug.normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
+        }
+      },
     }
 
   }

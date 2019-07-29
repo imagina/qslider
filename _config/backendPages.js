@@ -9,13 +9,13 @@ import access from '@imagina/quser/_router/middlewares/access'
 export default {
   //Home Page
   index: {
-    permission: 'slider.sliders.manage',
+    permission: 'slider.sliders.index',
     activated: true,
     path: '/slider/index',
-    name: 'app.slider.index',
-    layout: require('@imagina/qslider/_layouts/index').default,
+    name: 'qslider.admin.sliders',
+    layout: require('@imagina/qslider/_layouts/admin/index').default,
     containerLayout: master,
-    title: 'Slider',
+    title: 'qslider.sidebar.adminIndex',
     icon: 'fas fa-images',
     middleware: [auth,access]
   },
