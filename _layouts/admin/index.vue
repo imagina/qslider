@@ -70,10 +70,10 @@
                 </q-carousel-control>
               </q-carousel>
               <div class="row q-py-xs justify-end bg-grey-3">
-
                 <!--== Slider Edit ==-->
                 <q-btn icon="fas fa-pen" color="positive" size="sm" class="q-mx-xs"
-                       @click="showSliderModal(slider)" v-if="$auth.hasAccess('slider.sliders.edit')">
+                       @click="showSliderModal(slider)"
+                       v-if="$auth.hasAccess('slider.sliders.edit') && hasPermissionRecordMAster(slider).edit">
                   <q-tooltip :offset="[5, 5]">
                     {{$tr('ui.label.edit')}}
                   </q-tooltip>
@@ -82,7 +82,7 @@
                 <!--== Slider Delete ==-->
                 <q-btn icon="far fa-trash-alt" color="negative" size="sm"
                        class="q-mx-xs" @click="dialogDeleteSlider.handler(slider.id)"
-                       v-if="$auth.hasAccess('slider.sliders.destroy')">
+                       v-if="$auth.hasAccess('slider.sliders.destroy') && hasPermissionRecordMAster(slider).destroy">
                   <q-tooltip :offset="[5, 5]">
                     {{$tr('ui.label.delete')}}
                   </q-tooltip>
@@ -181,10 +181,12 @@
                      class="image border q-my-sm col-12 col-sm-4 col-md-3">
                   <div style="bottom: 5px; right: 5px; position: absolute;">
                     <q-btn icon="fas fa-pen" color="positive" size="xs" class="q-mx-xs"
+                           v-if="hasPermissionRecordMAster(slide).edit"
                            @click="showSlideModal(slide)">
                       <q-tooltip>{{$tr('ui.label.edit')}}</q-tooltip>
                     </q-btn>
                     <q-btn icon="far fa-trash-alt" color="negative" size="xs" class="q-mx-xs"
+                           v-if="hasPermissionRecordMAster(slide).destroy"
                            @click="deleteSlide(slide.id, index)">
                       <q-tooltip>{{$tr('ui.label.delete')}}</q-tooltip>
                     </q-btn>
@@ -211,6 +213,22 @@
                           {label : $tr('ui.label.enabled'), value : true},
                           {label : $tr('ui.label.disabled'), value : false},
                         ]"/>
+              <!--Record Master-->
+              <div v-if="canManageRecordMaster">
+                <div class="input-title">
+                  {{`${$tr('ui.form.masterRecord')}`}}
+                </div>
+                <tree-select
+                  v-if="sliderToEdit.options && (parseInt(sliderToEdit.options.masterRecord) >= 0)"
+                  v-model="sliderToEdit.options.masterRecord"
+                  :clearable="false"
+                  :options="[
+                    {label: this.$tr('ui.label.yes'), id: 1},
+                    {label: this.$tr('ui.label.no'), id: 0},
+                  ]"
+                  placeholder=""
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -269,6 +287,20 @@
               </q-field>
             </div>
             <div class="col-12 col-md-5">
+              <div v-if="canManageRecordMaster">
+                <div class="input-title">
+                  {{`${$tr('ui.form.masterRecord')}`}}
+                </div>
+                <tree-select
+                  :clearable="false"
+                  v-model="locale.formTemplate.options.masterRecord"
+                  :options="[
+                    {label: this.$tr('ui.label.yes'), id: 1},
+                    {label: this.$tr('ui.label.no'), id: 0},
+                  ]"
+                  placeholder=""
+                />
+              </div>
               <!--== Slide Active ==-->
               <q-select :stack-label="`${$tr('ui.form.status')} (${locale.language})`"
                         v-model="locale.formTemplate.active"
@@ -357,7 +389,10 @@
             mediasSingle: {},
             sliderId: '',
             position: 0,
-            type: 'auto'
+            type: 'auto',
+            options: {
+              masterRecord: 0
+            }
           },
           fieldsTranslatable: {
             title: '',
@@ -415,7 +450,19 @@
         ],
       }
     },
-    computed: {},
+    computed: {
+      //Has manage master record
+      canManageRecordMaster() {
+        let response = true
+
+        if (this.sliderToEdit.id && !this.$auth.hasAccess('isite.master.records.edit'))
+          response = false
+        if (!this.sliderToEdit.id && !this.$auth.hasAccess('isite.master.records.create'))
+          response = false
+
+        return response
+      },
+    },
     methods: {
       async getData({pagination, search}, refresh = false) {
         this.loading = true
@@ -464,7 +511,8 @@
             name: '',
             systemName: '',
             active: true,
-            slides: []
+            slides: [],
+            options: {masterRecord: 0}
           }
         }
         this.modalSlider = true
@@ -555,7 +603,7 @@
           this.$alert.success({message: this.$tr('ui.message.recordDeleted')})
           this.getData({pagination: this.pagination, search: this.filter.search}, true)
         }).catch(error => {
-          this.$alert.error({message: this.$tr('ui.message.recordNoDeleted'), pos : 'bottom'})
+          this.$alert.error({message: this.$tr('ui.message.recordNoDeleted'), pos: 'bottom'})
           this.loading = false
         })
       },
@@ -567,7 +615,7 @@
           this.sliderToEdit.slides.splice(pos, 1);
           this.getData({pagination: this.pagination, search: this.filter.search}, true)
         }).catch(error => {
-          this.$alert.error({message: this.$tr('ui.message.recordNoDeleted'), pos : 'bottom'})
+          this.$alert.error({message: this.$tr('ui.message.recordNoDeleted'), pos: 'bottom'})
           this.loading = false
         })
       },
@@ -580,6 +628,27 @@
           this.sliderToEdit.systemName = this.$clone(slug.normalize("NFD").replace(/[\u0300-\u036f]/g, ""))
         }
       },
+
+      hasPermissionRecordMAster(record) {
+        let options = record.options || false
+        let response = {
+          create: true,
+          edit: true,
+          index: true,
+          destroy : true,
+        }
+
+        if (options && parseInt(options.masterRecord)) {
+          response = {
+            create: this.$auth.hasAccess('isite.master.records.create'),
+            edit: this.$auth.hasAccess('isite.master.records.edit'),
+            index: this.$auth.hasAccess('isite.master.records.index'),
+            destroy : this.$auth.hasAccess('isite.master.records.destroy')
+          }
+        }
+
+        return response
+      }
     }
 
   }

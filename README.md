@@ -2,7 +2,7 @@
 
 ## Installation
 
-`` npm i @imagina/qslider@1.0.0 ``
+`` npm i @imagina/qslider@1.0.1 ``
 
 ## API Routes
 
