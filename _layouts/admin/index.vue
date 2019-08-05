@@ -219,7 +219,6 @@
                   {{`${$tr('ui.form.masterRecord')}`}}
                 </div>
                 <tree-select
-                  v-if="sliderToEdit.options && (parseInt(sliderToEdit.options.masterRecord) >= 0)"
                   v-model="sliderToEdit.options.masterRecord"
                   :clearable="false"
                   :options="[
@@ -407,8 +406,8 @@
         mediaKey: uid(),
         modalSlider: false,
         modalSlide: false,
-        sliderToEdit: {},
-        slideToEdit: {},
+        sliderToEdit: {options:{masterRecord:0}},
+        slideToEdit: {options:{masterRecord:0}},
         dialogDeleteSlider: {
           handler: (id) => {
             this.$q.dialog({
@@ -503,9 +502,8 @@
       },
 
       showSliderModal(slider) {
-
         if (slider) {
-          this.sliderToEdit = slider;
+          this.sliderToEdit = this.$clone(Object.assign({},this.sliderToEdit,slider));
         } else {
           this.sliderToEdit = {
             name: '',
