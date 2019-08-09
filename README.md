@@ -1,4 +1,4 @@
-## QSLIDER  | 1.0.0
+## QSLIDER  | 1.0.3
 
 ## Installation
 

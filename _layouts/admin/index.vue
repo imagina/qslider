@@ -1,14 +1,7 @@
 <template>
-  <div id="sliderIndex" class="q-layout-page row layout-padding">
-
-    <!--TITLE-->
-    <h1 class="q-headline text-primary">
-      <q-icon :name="$route.meta.icon"></q-icon>
-      {{$tr($route.meta.title)}}
-    </h1>
-
+  <div id="sliderIndex">
     <div class="col-12 text-right backend-page relative-position">
-      <div class="border-top-color row shadow-1" style="padding: 0px !important;">
+      <div class="box row" style="padding: 0px !important;">
         <!--Actions-->
         <div class="col-12 q-pa-md">
           <q-search
