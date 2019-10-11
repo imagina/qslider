@@ -20,7 +20,7 @@
           </div>
         </div>
       </q-carousel-slide>
-      
+
       <!--= Controls =-->
       <q-carousel-control slot="control-nav"
                           class="q-container"
@@ -69,7 +69,6 @@
   }
 </script>
 <style lang="stylus">
-  @import "~variables";
   #carousel
     .q-carousel-slide
       padding 0

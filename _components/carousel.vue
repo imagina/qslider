@@ -50,7 +50,6 @@
   }
 </script>
 <style lang="stylus">
-  @import "~variables";
   #marcasComponent
     text-align center
     border-top 1px solid $grey-11

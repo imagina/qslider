@@ -1,14 +1,13 @@
 <template>
   <div id="fullWidthCarousel" class="col-12">
-    <q-carousel class="text-white" infinite>
-      <q-carousel-slide v-for="(picture , i) in gallery" :key="i" :img-src="picture.imageUrl">
+    <q-carousel v-model="currentSlide" class="text-white" infinite>
+      <q-carousel-slide :name="key" v-for="(picture , key) in gallery" :key="key" :img-src="picture.imageUrl">
         <div class="row q-container items-center full-height">
-          <div class="col-12">
-            <div class="q-headline text-weight-medium">
+          <div class="text-center col-12 col-sm-8">
+            <div class="text-h5 text-weight-medium">
               {{ picture.title }}
             </div>
-            <div class="q-display-1 text-weight-light"
-                 v-html="picture.customHtml"/>
+            <div class="text-h3 text-weight-light" v-html="picture.customHtml"></div>
           </div>
         </div>
       </q-carousel-slide>
@@ -24,6 +23,7 @@
     },
     data() {
       return {
+        currentSlide: 0,
         gallery: [],
       }
     },
@@ -38,7 +38,7 @@
     methods: {
       getGallery: function () {
         let params = {
-          refresh : true,
+          refresh: true,
           params: {
             filter: {
               field: 'system_name'
@@ -56,7 +56,6 @@
 </script>
 
 <style lang="stylus">
-  @import "~variables"
   #fullWidthCarousel
     .q-carousel
       height 70vh
