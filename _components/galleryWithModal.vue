@@ -27,20 +27,19 @@
         </q-list>
       </div>
     </div>
-    <q-no-ssr>
-      <q-carousel v-model="currentCarousel" class="text-white q-mb-sm" arrows height="60%" quick-nav
-                  ref="carouselGallery" v-show="visibleCarousel">
-        <q-carousel-slide :name="i" v-for="(picture , i) in gallery" :key="i" class="bg-grey-2">
-          <div class="img-fluid absolute-center" :style="'background-image: url('+picture.imageUrl+')'"></div>
-        </q-carousel-slide>
-        <template v-slot:control>
-          <q-carousel-control position="top-right">
-            <q-btn round dense color="primary" icon="close"
-                   @click="$refs.carouselGallery.toggleFullscreen();visibleCarousel=false"/>
-          </q-carousel-control>
-        </template>
-      </q-carousel>
-    </q-no-ssr>
+
+    <q-carousel v-model="currentCarousel" class="text-white q-mb-sm" arrows height="60%" quick-nav
+                ref="carouselGallery" v-show="visibleCarousel">
+      <q-carousel-slide :name="i" v-for="(picture , i) in gallery" :key="i" class="bg-grey-2">
+        <div class="img-fluid absolute-center" :style="'background-image: url('+picture.imageUrl+')'"></div>
+      </q-carousel-slide>
+      <template v-slot:control>
+        <q-carousel-control position="top-right">
+          <q-btn round dense color="primary" icon="close"
+                 @click="$refs.carouselGallery.toggleFullscreen();visibleCarousel=false"/>
+        </q-carousel-control>
+      </template>
+    </q-carousel>
     <q-inner-loading :visible="loading">
       <q-spinner-mat size="50px" color="primary"></q-spinner-mat>
     </q-inner-loading>
@@ -54,15 +53,6 @@
     name: "galleryWithModal",
     props: {
       systemName: {default: 'gallery'}
-    },
-    components: {},
-    data() {
-      return {
-        gallery: [],
-        currentCarousel: 0,
-        loading: true,
-        visibleCarousel: false,
-      }
     },
     beforeRouteLeave(to, from, next) {
       // closing modal details if is opened
@@ -82,32 +72,27 @@
       /**
        * set page toolbar title
        * */
-      this.getGallery();
       document.addEventListener('keyup', (evt) => {
         if (evt.keyCode === 27) {
           this.visibleCarousel = false
         }
       });
     },
+    data() {
+      return {
+        currentCarousel: 0,
+        loading: true,
+        visibleCarousel: false,
+      }
+    },
+    computed:{
+      gallery(){
+        let gallery = this.$store.state.qcrudMaster.show[`qslider-slider-${this.systemName}`]
+        return gallery ? gallery.data.slides : false
+      }
+    },
     methods: {
-      getGallery: function () {
-        this.loading = true;
-        let params = {
-          refresh: true,
-          params: {
-            filter: {
-              field: 'system_name'
-            }
-          }
-        }
-        this.$crud.show('apiRoutes.qslider.sliders', this.systemName, params).then(response => {
-          this.gallery = response.data.slides;
-          this.loading = false;
-        }).catch(error => {
-          this.loading = false;
-        });
-      },
-      ifVideoUrl: function ($url) {
+      ifVideoUrl($url) {
         if ($url == null) {
           return false
         }
@@ -164,6 +149,7 @@
       background-repeat no-repeat
       cursor pointer
       padding 0
+
     .q-btn__content
       background-color $grey-9
       border-radius 50%

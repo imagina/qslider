@@ -17,41 +17,20 @@
 
 <script>
   export default {
-    name: "fullWidthGallery",
     props: {
       systemName: {default: false}
     },
     data() {
       return {
-        currentSlide: 0,
-        gallery: [],
+        currentSlide: 0
       }
     },
-    watch: {
-      'systemName'() {
-        this.getGallery()
+    computed: {
+      gallery() {
+        let gallery = this.$store.state.qcrudMaster.show[`qslider-slider-${this.systemName}`]
+        return gallery ? gallery.data.slides : []
       }
     },
-    mounted() {
-      this.getGallery()
-    },
-    methods: {
-      getGallery: function () {
-        let params = {
-          refresh: true,
-          params: {
-            filter: {
-              field: 'system_name'
-            }
-          }
-        }
-        this.$crud.show('apiRoutes.qslider.sliders', this.systemName, params).then(response => {
-          this.gallery = response.data.slides;
-        }).catch(error => {
-          console.warn(error)
-        });
-      },
-    }
   }
 </script>
 
