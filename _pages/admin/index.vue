@@ -321,14 +321,12 @@
   /*Components*/
   import draggable from 'vuedraggable'
   import mediaForm from '@imagina/qmedia/_components/form'
-  import locales from '@imagina/qsite/_components/locales'
 
   export default {
     props: {},
     components: {
       draggable: draggable,
-      mediaForm,
-      locales
+      mediaForm
     },
     mounted () {
       this.$nextTick(function () {
