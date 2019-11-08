@@ -50,7 +50,7 @@
 
                 <q-carousel swipeable animated arrows v-model="carouselModel[slider.id]"
                             :fullscreen.sync="carouselFullScreen[slider.id]"
-                            infinite autoplay height="200px" :ref="`carousel${slider.id}`">
+                             autoplay height="200px" :ref="`carousel${slider.id}`">
 
                   <q-carousel-slide v-for="slide in slider.slides" :key="slide.id"
                                     :name="slide.id" :img-src="slide.imageUrl">
@@ -70,7 +70,7 @@
                 <div class="row q-py-xs justify-end bg-grey-3">
                   <!--== Slider Edit ==-->
                   <q-btn icon="fas fa-pen" color="positive" size="sm" class="q-mx-xs"
-                         @click="showSliderModal(slider)"
+                         :to="{name: 'qslider.admin.sliders.show', params: {id: slider.id}}"
                          v-if="$auth.hasAccess('slider.sliders.edit') && hasPermissionRecordMAster(slider).edit">
                     <q-tooltip :offset="[5, 5]">
                       {{$tr('ui.label.edit')}}
@@ -151,13 +151,12 @@
 
       <!--Edit slider-->
       <q-dialog v-model="modalSlider" v-if="sliderToEdit" id="sliderModalEdit"
-                :content-css="{minWidth: '80vw', minHeight: '80vh'}">
-        <q-card class="relative-position backend-page">
+                :content-css="{minwidth: '80vw', minHeight: '80vh'}">
+        <q-card class="relative-position backend-page" style="width: 500px;">
           <!--Header-->
           <q-toolbar class="bg-primary text-white">
             <q-toolbar-title>
-              <label v-if="sliderToEdit">{{$tr('qslider.layout.updateSlider')}}</label>
-              <label v-else>{{$tr('qslider.layout.createSlider')}}</label>
+              <label>{{$tr('qslider.layout.createSlider')}}</label>
             </q-toolbar-title>
             <q-btn flat v-close-popup icon="fas fa-times"/>
           </q-toolbar>
@@ -199,7 +198,7 @@
                          :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
                          v-model="sliderToEdit.systemName"/>
                 <!--== Slide Active ==-->
-                <q-select :label="$tr('ui.form.status')"
+                <q-select class="q-mb-md" :label="$tr('ui.form.status')"
                           v-model="sliderToEdit.active"
                           emit-value map-options
                           :options="[
