@@ -1,8 +1,8 @@
-## QSLIDER  | 2.0.2
+## QSLIDER  | 2.0.3
 
 ## Installation
 
-`` npm i @imagina/qslider@2.0.2``
+`` npm i @imagina/qslider@2.0.3``
 
 ## API Routes
 
