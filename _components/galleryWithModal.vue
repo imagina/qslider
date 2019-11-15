@@ -2,7 +2,7 @@
   <div id="galleryWithModalContainer">
     <div class="q-ml-none">
       <div class="row justify-center" v-if="gallery">
-        <div v-for="(picture , i) in gallery" :key="i"
+        <div v-for="(picture , i) in position" :key="i"
              class="img-container col-xs-12 col-sm-6 col-md-4 col-lg-3" @click="openModal(i)">
           <div v-if="picture.type==='360'" class="gallery-img">
             <q-no-ssr>
@@ -47,12 +47,14 @@
 </template>
 
 <script>
-  import iSlideService from '@imagina/qslider/_services/index'
 
   export default {
     name: "galleryWithModal",
     props: {
-      systemName: {default: 'gallery'}
+        systemName:{
+            type: String,
+            default: null
+        },
     },
     beforeRouteLeave(to, from, next) {
       // closing modal details if is opened
@@ -83,12 +85,28 @@
         currentCarousel: 0,
         loading: true,
         visibleCarousel: false,
+        position: {},
       }
     },
     computed:{
       gallery(){
-        let gallery = this.$store.state.qcrudMaster.show[`qslider-slider-${this.systemName}`]
-        return gallery ? gallery.data.slides : false
+          let params = {
+              params: {
+                  filter: {
+                      field: 'system_name'
+                  }
+              }
+          }
+          this.loading = true
+          this.$crud.show('apiRoutes.qslider.sliders', this.systemName, params).then(response => {
+              this.position = response.data
+              console.log(this.position)
+
+              this.loading = false
+          }).catch(error => {
+              this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+              this.loading = false
+          })
       }
     },
     methods: {
