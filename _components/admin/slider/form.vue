@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-12"  style="width: 100%; height: 295px">
+    <div class="col-12" style="width: 100%">
       <q-form
         class="q-mt-lg"
         @submit="updateOrCreateSlider(form)"
@@ -27,8 +27,8 @@
           emit-value
           map-options
           :options="[
-            {label : $tr('ui.label.enabled'), value : true},
-            {label : $tr('ui.label.disabled'), value : false},
+            {label : $tr('ui.label.enabled'), value : 1},
+            {label : $tr('ui.label.disabled'), value : 0},
           ]"
           outlined
           dense/>
@@ -46,13 +46,17 @@
           outlined
           dense/>
       </q-form>
-      <q-btn
-        @click="$refs.formContent.submit()"
-        icon="fas fa-save"
-        class="q-mt-md no-shadow btn-small"
-        color="positive"
-        :label="$tr('ui.label.save')"
-        :loading="loading"/>
+      <div class="text-right">
+        <q-btn
+          @click="$refs.formContent.submit()"
+          icon="fas fa-save"
+          class="btn-small"
+          color="positive"
+          :label="$tr('ui.label.save')"
+          unelevated
+          rounded
+          :loading="loading"/>
+      </div>
     </div>
     <inner-loading :visible="loading"/>
   </div>
@@ -60,8 +64,8 @@
 
 <script>
   export default {
-    props:{
-      form:{
+    props: {
+      form: {
         type: Object,
         default: () => {
           return {
@@ -76,13 +80,13 @@
         }
       }
     },
-    data (){
+    data() {
       return {
         loading: false
       }
     },
     computed: {
-      canManageRecordMaster () {
+      canManageRecordMaster() {
         let response = true
         if (this.form.id && !this.$auth.hasAccess('isite.master.records.edit')) {
           response = false
@@ -93,20 +97,20 @@
         return response
       },
     },
-    methods:{
-      updateOrCreateSlider (data) {
+    methods: {
+      updateOrCreateSlider(data) {
         this.loading = true
         if (this.form.id) {
-          this.$crud.update('apiRoutes.qslider.sliders', data.id, data).then( response => {
-            this.$alert.info({ message: this.$tr('ui.message.recordUpdated') })
+          this.$crud.update('apiRoutes.qslider.sliders', data.id, data).then(response => {
+            this.$alert.info({message: this.$tr('ui.message.recordUpdated')})
             this.loading = false
-          }).catch( error => {
-            this.$alert.error({ message: this.$tr('ui.message.recordNoUpdated') })
+          }).catch(error => {
+            this.$alert.error({message: this.$tr('ui.message.recordNoUpdated')})
             this.loading = false
           })
         }
       },
-      hasPermissionRecordMAster (record) {
+      hasPermissionRecordMAster(record) {
         let options = record.options || false
         let response = {
           create: true,

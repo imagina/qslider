@@ -1,3 +1,4 @@
 export default {
-  adminIndex : 'Slider',
+  adminSlider : 'Sliders',
+  adminSliderEdit : 'Editar Slider'
 }

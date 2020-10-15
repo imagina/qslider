@@ -5,22 +5,27 @@ export default {
     activated: true,
     path: '/slider/index',
     name: 'qslider.admin.sliders',
-    page: () => import('@imagina/qslider/_pages/admin/index'),
+    page: () => import('@imagina/qslider/_pages/admin/sliders/index'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'qslider.sidebar.adminIndex',
+    title: 'qslider.sidebar.adminSlider',
     icon: 'fas fa-images',
     authenticated: true,
+    subHeader: {refresh: true}
   },
   showSlider: {
     permission: 'slider.sliders.index',
     activated: true,
     path: '/slider/show/:id',
     name: 'qslider.admin.sliders.show',
-    page: () => import('@imagina/qslider/_pages/admin/slider/show.vue'),
+    page: () => import('@imagina/qslider/_pages/admin/sliders/form'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
-    title: 'qslider.sidebar.adminIndex',
-    icon: 'fas fa-images',
+    title: 'qslider.sidebar.adminSliderEdit',
+    icon: 'fas fa-image',
     authenticated: true,
+    subHeader : {
+      refresh: true,
+      breadcrumb: ['qslider.index']
+    }
   },
   createSlide: {
     permission: 'slider.sliders.index',
