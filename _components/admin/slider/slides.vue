@@ -28,33 +28,55 @@
             </div>
           </div>
           <q-separator/>
-          <iframe
-            v-if="slide.imageUrl && slide.imageUrl.indexOf('youtube.com')"
-            width="100%"
-            height="300"
-            :src="slide.imageUrl"
-            frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-          </iframe>
-          <video
-            width="100%"
-            height="300"
-            v-else-if="slide.imageUrl && slide.imageUrl.indexOf('.mp4')"
-            class='img-responsive center-block'
-            loop
-            controls='false'>
-            <source :src="slide.imageUrl" type='video/mp4'>
-          </video>
-          <div
-            v-else
-            :style="`
+          <div class="full-width" v-if="slide.imageUrl">
+            <iframe
+                v-if="~slide.imageUrl.indexOf('youtube.com')"
+                width="100%"
+                height="300"
+                :src="slide.imageUrl"
+                frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+            <video
+                width="100%"
+                height="300"
+                v-else-if="~slide.imageUrl.indexOf('.mp4')"
+                class='img-responsive center-block'
+                loop
+                controls='false'>
+              <source :src="slide.imageUrl" type='video/mp4'>
+            </video>
+            <div
+                v-else
+                :style="`
         background: url('${slide.imageUrl}');
         background-size: cover;
         background-position: center;
         height: 300px;
         display: block;
         max-width: 100%;`">
+            </div>
+          </div>
+          <div class="full-width" v-else-if="slide.url">
+            <iframe
+                v-if="~slide.url.indexOf('youtube.com')"
+                width="100%"
+                height="300"
+                :src="slide.url"
+                frameborder="0"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+            <video
+                width="100%"
+                height="300"
+                v-else-if="~slide.url.indexOf('.mp4')"
+                class='img-responsive center-block'
+                loop
+                controls='false'>
+              <source :src="slide.url" type='video/mp4'>
+            </video>
           </div>
         </q-card>
       </draggable>
