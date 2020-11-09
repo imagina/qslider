@@ -8,7 +8,7 @@
           <div class="box">
             <div class="row gutter-y-sm">
               <div class="col-12 relative-position">
-                <sliderForm :form="slider"/>
+                <sliderForm :form-data="slider"/>
                 <inner-loading :visible="loading"/>
               </div>
             </div>

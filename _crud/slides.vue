@@ -115,6 +115,16 @@
                 ]
               }
             },
+            codeAds: {
+              value: '',
+              type: 'input',
+              isFakeField: true,
+              props: {
+                label: `${this.$tr('qslider.layout.label.codeAds')}`,
+                type: 'textarea',
+                rows: "3"
+              },
+            },
             mediasSingle: {
               value: {},
               type: 'media',

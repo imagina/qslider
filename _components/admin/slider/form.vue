@@ -45,6 +45,8 @@
           ]"
           outlined
           dense/>
+        <q-checkbox v-model="form.options.showAsPopup" :label="$tr('qslider.layout.label.showAsPopup')"
+                    true-value="1" false-value="0"/>
       </q-form>
       <div class="text-right">
         <q-btn
@@ -65,24 +67,25 @@
 <script>
   export default {
     props: {
-      form: {
-        type: Object,
-        default: () => {
-          return {
-            id: '',
-            name: '',
-            systemName: '',
-            active: false,
-            options: {
-              masterRecord: 1
-            }
-          }
+      formData: {type: Object}
+    },
+    watch: {
+      formData: {
+        deep: true,
+        handler: function () {
+          this.setFormData()
         }
       }
     },
+    mounted() {
+      this.$nextTick(function () {
+        this.setFormData()
+      })
+    },
     data() {
       return {
-        loading: false
+        loading: false,
+        form: {options: {}}
       }
     },
     computed: {
@@ -98,6 +101,11 @@
       },
     },
     methods: {
+      setFormData() {
+        let options = {showAsPopup: false, ...(this.formData.options || {})}
+        this.form = this.$clone(this.formData)
+        this.form.options = this.$clone(options)
+      },
       updateOrCreateSlider(data) {
         this.loading = true
         if (this.form.id) {

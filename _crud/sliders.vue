@@ -30,7 +30,7 @@
             requestParams: {}
           },
           update: {
-            to : 'qslider.admin.sliders.show'
+            to: 'qslider.admin.sliders.show'
           },
           delete: true,
           formLeft: {
@@ -65,6 +65,16 @@
                   {label: this.$tr('ui.label.enabled'), value: '1'},
                   {label: this.$tr('ui.label.disabled'), value: '0'},
                 ]
+              }
+            },
+            showAsPopup: {
+              value: '0',
+              type: 'checkbox',
+              isFakeField: true,
+              props: {
+                label: this.$tr('qslider.layout.label.showAsPopup'),
+                trueValue: "1",
+                falseValue: "0"
               }
             },
           },

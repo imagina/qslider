@@ -3,5 +3,9 @@ export default {
   updateSlider : 'Actualizar Slider',
   createSlider : 'Crear Slider',
   newSlide : 'Nuevo Elemento',
-  updateSlide : 'Actualizar Elemento'
+  updateSlide : 'Actualizar Elemento',
+  label : {
+    codeAds  : 'Codigo ADS',
+    showAsPopup : 'Mostrar como ventana emergente'
+  }
 }
