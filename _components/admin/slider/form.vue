@@ -45,8 +45,6 @@
           ]"
           outlined
           dense/>
-        <q-checkbox v-model="form.options.showAsPopup" :label="$tr('qslider.layout.label.showAsPopup')"
-                    true-value="1" false-value="0"/>
       </q-form>
       <div class="text-right">
         <q-btn
@@ -102,7 +100,7 @@
     },
     methods: {
       setFormData() {
-        let options = {showAsPopup: false, ...(this.formData.options || {})}
+        let options = this.formData.options || {}
         this.form = this.$clone(this.formData)
         this.form.options = this.$clone(options)
       },
