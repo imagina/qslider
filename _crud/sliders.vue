@@ -67,16 +67,6 @@
                 ]
               }
             },
-            showAsPopup: {
-              value: '0',
-              type: 'checkbox',
-              isFakeField: true,
-              props: {
-                label: this.$tr('qslider.layout.label.showAsPopup'),
-                trueValue: "1",
-                falseValue: "0"
-              }
-            },
           },
           formRight: {},
         }
