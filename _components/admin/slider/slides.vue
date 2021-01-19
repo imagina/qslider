@@ -22,7 +22,7 @@
             <!--Actions-->
             <div class="col-6 text-right">
               <q-btn color="blue-4" size="sm" round icon="fas fa-pen" unelevated class="q-mr-sm"
-                     @click="$refs.crudSlide.update(slide.id)"/>
+                     @click="$refs.crudSlide.update(slide)"/>
               <q-btn @click="deleteSlideDialog(slide.id, index)" color="negative" unelevated
                      size="sm" round icon="far fa-trash-alt"/>
             </div>
