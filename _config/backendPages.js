@@ -1,7 +1,7 @@
 export default {
   //Home Page
   index: {
-    permission: 'slider.sliders.index',
+    permission: 'slider.sliders.manage',
     activated: true,
     path: '/slider/index',
     name: 'qslider.admin.sliders',
