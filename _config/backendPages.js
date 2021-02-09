@@ -9,7 +9,7 @@ export default {
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'qslider.sidebar.adminSlider',
-    icon: 'fas fa-images',
+    icon: 'fas fa-file-export',
     authenticated: true,
     subHeader: {refresh: true}
   },
