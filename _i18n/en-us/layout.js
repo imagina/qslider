@@ -5,6 +5,7 @@ export default {
   updateSlide : 'Update Item',
   label : {
     codeAds  : 'Code ADS',
-    showAsPopup : 'Show as Popup'
+    showAsPopup : 'Show as Popup',
+    buttonText: 'Button Text',
   }
 }
