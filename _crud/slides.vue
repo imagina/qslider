@@ -41,7 +41,7 @@
               value: '',
               type: 'input',
               isTranslatable : true,
-              props: {label: 'caption'},
+              props: {label: this.$tr('qslider.layout.label.buttonText')},
             },
             uri: {
               value: '',
@@ -66,6 +66,15 @@
               props: {
                 label: `${this.$tr('ui.form.image')}`,
               },
+            },
+            summary: {
+              value: '',
+              type: 'input',
+              isTranslatable: true,
+              props: {
+                type: 'textarea',
+                label: `${this.$tr('ui.form.summary')}`,
+              }
             },
             customHtml: {
               value: '',
