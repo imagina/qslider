@@ -10,6 +10,7 @@
       crudData() {
         return {
           crudId: this.crudId,
+          entityName: config("main.qslider.entityNames.slider"),
           apiRoute: 'apiRoutes.qslider.sliders',
           permission: 'slider.sliders',
           create: {
