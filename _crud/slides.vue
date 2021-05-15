@@ -13,6 +13,7 @@
           entityName: config("main.qslider.entityNames.slide"),
           apiRoute: 'apiRoutes.qslider.slides',
           permission: 'slider.slides',
+          extraFormFields: 'Slider.crud-fields.slides',
           create: {
             title: this.$tr('qslider.layout.newSlide'),
           },
