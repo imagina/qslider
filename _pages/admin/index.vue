@@ -30,7 +30,7 @@
                 />
               </q-btn-group>
               <!--Button new record-->
-              <q-btn icon="fas fa-edit" color="positive" :label="$tr('qslider.layout.newSlider')"
+              <q-btn icon="fas fa-edit" color="green" :label="$tr('qslider.layout.newSlider')"
                      @click="showSliderModal(false)" v-if="$auth.hasAccess('slider.sliders.create')"/>
               <!--Button refresh data-->
               <q-btn color="info" icon="fas fa-sync" class="q-ml-sm"
@@ -69,7 +69,7 @@
 
                 <div class="row q-py-xs justify-end bg-grey-3">
                   <!--== Slider Edit ==-->
-                  <q-btn icon="fas fa-pen" color="positive" size="sm" class="q-mx-xs"
+                  <q-btn icon="fas fa-pen" color="green" size="sm" class="q-mx-xs"
                          :to="{name: 'qslider.admin.sliders.show', params: {id: slider.id}}"
                          v-if="$auth.hasAccess('slider.sliders.edit') && hasPermissionRecordMAster(slider).edit">
                     <q-tooltip :offset="[5, 5]">
@@ -78,7 +78,7 @@
                   </q-btn>
 
                   <!--== Slider Delete ==-->
-                  <q-btn icon="far fa-trash-alt" color="negative" size="sm"
+                  <q-btn icon="far fa-trash-alt" color="red" size="sm"
                          class="q-mx-xs" @click="dialogDeleteSlider.handler(slider.id)"
                          v-if="$auth.hasAccess('slider.sliders.destroy') && hasPermissionRecordMAster(slider).destroy">
                     <q-tooltip :offset="[5, 5]">
@@ -126,7 +126,7 @@
 
                 <q-btn
                   icon="fas fa-pen"
-                  color="positive"
+                  color="green"
                   size="sm"
                   class="q-mx-xs"
                   @click="showSliderModal(props.row)"
@@ -134,7 +134,7 @@
 
                 <q-btn
                   icon="far fa-trash-alt"
-                  color="negative"
+                  color="red"
                   size="sm"
                   class="q-mx-xs"
                   @click="dialogDeleteSlider.handler(props.row.id)"
@@ -164,7 +164,7 @@
           <div class=" q-pa-md row q-col-gutter-md">
             <div v-if="sliderToEdit.id" class="col-12 col-md-7 text-right">
               <!--Button add new-->
-              <q-btn icon="add" color="positive" class="q-mx-xs btn-small"
+              <q-btn icon="add" color="green" class="q-mx-xs btn-small"
                      @click="showSlideModal(false)" :label="$tr('qslider.layout.newSlide')"/>
               <!---Draggable-->
               <draggable v-model="sliderToEdit.slides" group="slides">
@@ -172,12 +172,12 @@
                      :style="'background-image: url('+slide.imageUrl+'); position:relative'"
                      class="image border q-my-sm col-12 col-sm-4 col-md-3">
                   <div style="bottom: 5px; right: 5px; position: absolute;">
-                    <q-btn icon="fas fa-pen" color="positive" size="xs" class="q-mx-xs"
+                    <q-btn icon="fas fa-pen" color="green" size="xs" class="q-mx-xs"
                            v-if="hasPermissionRecordMAster(slide).edit"
                            @click="showSlideModal(slide)">
                       <q-tooltip>{{$tr('ui.label.edit')}}</q-tooltip>
                     </q-btn>
-                    <q-btn icon="far fa-trash-alt" color="negative" size="xs" class="q-mx-xs"
+                    <q-btn icon="far fa-trash-alt" color="red" size="xs" class="q-mx-xs"
                            v-if="hasPermissionRecordMAster(slide).destroy"
                            @click="deleteSlide(slide.id, index)">
                       <q-tooltip>{{$tr('ui.label.delete')}}</q-tooltip>
@@ -221,7 +221,7 @@
           <!--Footer-->
           <q-toolbar>
             <q-toolbar-title></q-toolbar-title>
-            <q-btn color="positive" :label="$tr('ui.label.save')" :loading="loading"
+            <q-btn color="green" :label="$tr('ui.label.save')" :loading="loading"
                    @click="$refs.formContent.submit()"/>
           </q-toolbar>
 
@@ -307,7 +307,7 @@
           <!--Footer-->
           <q-toolbar>
             <q-toolbar-title/>
-            <q-btn color="positive" :label="$tr('ui.label.save')" icon="fas fa-save"
+            <q-btn color="green" :label="$tr('ui.label.save')" icon="fas fa-save"
                    @click="updateOrCreateSlide(); modalSlide = false"/>
           </q-toolbar>
         </q-card>
