@@ -18,7 +18,7 @@
           <div class="box">
             <div class="row gutter-y-sm">
               <div class="col-12 relative-position">
-                <sliderSlides :slider="slider" @refresh="getSlider(true)"/>
+                <sliderSlides :slider="slider" v-if="!loading" @refresh="getSlider(true)"/>
                 <inner-loading :visible="loading"/>
               </div>
             </div>

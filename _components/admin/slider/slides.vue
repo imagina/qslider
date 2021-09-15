@@ -16,7 +16,7 @@
             <!--Title-->
             <div class="col-6">
               <q-chip square icon="fas fa-images" text-color="white" :color="slide.active ? 'positive' : 'grey'">
-                {{slide.title}}
+                {{ slide.title }}
               </q-chip>
             </div>
             <!--Actions-->
@@ -44,7 +44,7 @@
                 v-else-if="~slide.imageUrl.indexOf('.mp4')"
                 class='img-responsive center-block'
                 loop
-                controls='false'>
+                :controls='false'>
               <source :src="slide.imageUrl" type='video/mp4'>
             </video>
             <div
@@ -74,7 +74,7 @@
                 v-else-if="~slide.url.indexOf('.mp4')"
                 class='img-responsive center-block'
                 loop
-                controls='false'>
+                :controls='false'>
               <source :src="slide.url" type='video/mp4'>
             </video>
           </div>
@@ -87,85 +87,100 @@
 </template>
 
 <script>
-  import renderMedia from '@imagina/qslider/_components/admin/slide/renderMedia'
-  import draggable from 'vuedraggable'
+import renderMedia from '@imagina/qslider/_components/admin/slide/renderMedia'
+import draggable from 'vuedraggable'
 
-  export default {
-    components: {
-      draggable,
-      renderMedia
-    },
-    data() {
-      return {
-        loading: false
-      }
-    },
-    props: {
-      slider: {
-        type: Object,
-        default: () => ({
-          id: 0,
-        })
-      },
-    },
-    watch: {},
-    methods: {
-      hasPermissionRecordMAster(record) {
-        let options = record.options || false
-        let response = {
-          create: true,
-          edit: true,
-          index: true,
-          destroy: true,
-        }
-        if (options && parseInt(options.masterRecord)) {
-          response = {
-            create: this.$auth.hasAccess('isite.master.records.create'),
-            edit: this.$auth.hasAccess('isite.master.records.edit'),
-            index: this.$auth.hasAccess('isite.master.records.index'),
-            destroy: this.$auth.hasAccess('isite.master.records.destroy')
-          }
-        }
-        return response
-      },
-      log() {
-        let slides = this.slider.slides.map(slide => ({id: slide.id}))
-        console.error(slides)
-      },
-      updateOrderSlides() {
-        let slides = this.slider.slides.map(slide => ({id: slide.id}))
-        let data = {
-          slider: slides
-        }
-        this.loading = true
-        this.$crud.create('apiRoutes.qslider.orderSlides', data).then(response => {
-          this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
-          this.loading = false
-        }).catch(error => {
-          this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
-          console.warn(error)
-          this.loading = false
-        })
-      },
-      deleteSlideDialog(slideId, pos){
-        this.$q.dialog({
-          title: 'Confirm',
-          ok: 'Delete',
-          message: 'You are sure to eliminate this slide?',
-          cancel: true,
-          persistent: true
-        }).onOk(() => {
-          this.$crud.delete('apiRoutes.qslider.slides', slideId).then(response => {
-            this.$alert.info({ message: this.$tr('ui.message.recordDeleted') })
-            //this.slider.slides.splice(pos, 1)
-            this.$root.$emit('deleteSlide', 'deleteSlide')
-          }).catch(error => {
-            this.$alert.error({ message: this.$tr('ui.message.recordNoDeleted'), pos: 'bottom' })
-          })
-        }).onCancel(() => {})
-      },
+export default {
+  components: {
+    draggable,
+    renderMedia
+  },
+  mounted() {
+    this.init()
+  },
+  data() {
+    return {
+      loading: false
     }
+  },
+  props: {
+    slider: {
+      type: Object,
+      default: () => ({
+        id: 0,
+      })
+    },
+  },
+  watch: {},
+  methods: {
+    init() {
+      this.openEditSlide()
+    },
+    openEditSlide() {
+      setTimeout(() => {
+        if (this.$route.query.edit) {
+          let slideToEdit = (this.slider.slides || []).find(item => item.id == this.$route.query.edit)
+          if (slideToEdit) this.$refs.crudSlide.update(slideToEdit)
+        }
+      }, 500)
+    },
+    hasPermissionRecordMAster(record) {
+      let options = record.options || false
+      let response = {
+        create: true,
+        edit: true,
+        index: true,
+        destroy: true,
+      }
+      if (options && parseInt(options.masterRecord)) {
+        response = {
+          create: this.$auth.hasAccess('isite.master.records.create'),
+          edit: this.$auth.hasAccess('isite.master.records.edit'),
+          index: this.$auth.hasAccess('isite.master.records.index'),
+          destroy: this.$auth.hasAccess('isite.master.records.destroy')
+        }
+      }
+      return response
+    },
+    log() {
+      let slides = this.slider.slides.map(slide => ({id: slide.id}))
+      console.error(slides)
+    },
+    updateOrderSlides() {
+      let slides = this.slider.slides.map(slide => ({id: slide.id}))
+      let data = {
+        slider: slides
+      }
+      this.loading = true
+      this.$crud.create('apiRoutes.qslider.orderSlides', data).then(response => {
+        this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
+        this.loading = false
+      }).catch(error => {
+        this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+        console.warn(error)
+        this.loading = false
+      })
+    },
+    deleteSlideDialog(slideId, pos) {
+      this.$q.dialog({
+        title: 'Confirm',
+        ok: 'Delete',
+        message: 'You are sure to eliminate this slide?',
+        cancel: true,
+        persistent: true
+      }).onOk(() => {
+        this.$crud.delete('apiRoutes.qslider.slides', slideId).then(response => {
+          this.$alert.info({message: this.$tr('ui.message.recordDeleted')})
+          //this.slider.slides.splice(pos, 1)
+          this.$root.$emit('deleteSlide', 'deleteSlide')
+        }).catch(error => {
+          this.$alert.error({message: this.$tr('ui.message.recordNoDeleted'), pos: 'bottom'})
+        })
+      }).onCancel(() => {
+      })
+    },
   }
+}
 </script>
 
 <style scoped>
