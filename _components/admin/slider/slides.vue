@@ -30,7 +30,7 @@
           <q-separator/>
           <div class="full-width" v-if="slide.imageUrl">
             <iframe
-                v-if="~slide.imageUrl.indexOf('youtube.com')"
+                v-if="(typeof slide.imageUrl == 'string') && slide.imageUrl.includes('youtube.com')"
                 width="100%"
                 height="300"
                 :src="slide.imageUrl"
@@ -41,7 +41,7 @@
             <video
                 width="100%"
                 height="300"
-                v-else-if="~slide.imageUrl.indexOf('.mp4')"
+                v-else-if="(typeof slide.imageUrl == 'mp4') && slide.imageUrl.includes('mp4')"
                 class='img-responsive center-block'
                 loop
                 :controls='false'>
@@ -60,7 +60,7 @@
           </div>
           <div class="full-width" v-else-if="slide.url">
             <iframe
-                v-if="~slide.url.indexOf('youtube.com')"
+                v-if="(typeof slide.url == 'string') && slide.url.includes('youtube.com')"
                 width="100%"
                 height="300"
                 :src="slide.url"
@@ -71,7 +71,7 @@
             <video
                 width="100%"
                 height="300"
-                v-else-if="~slide.url.indexOf('.mp4')"
+                v-else-if="(typeof slide.url == 'mp4') && slide.url.includes('mp4')"
                 class='img-responsive center-block'
                 loop
                 :controls='false'>
