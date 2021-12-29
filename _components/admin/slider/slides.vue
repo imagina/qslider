@@ -50,7 +50,7 @@
             <div
                 v-else
                 :style="`
-        background: url('${slide.imageUrl}');
+        background: url('${slide.mediaFiles.slideimage ? slide.mediaFiles.slideimage.mediumThumb : ''}');
         background-size: cover;
         background-position: center;
         height: 300px;
