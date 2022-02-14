@@ -153,10 +153,10 @@ export default {
       }
       this.loading = true
       this.$crud.create('apiRoutes.qslider.orderSlides', data).then(response => {
-        this.$alert.success({message: `${this.$tr('ui.message.recordUpdated')}`})
+        this.$alert.success({message: `${this.$tr('isite.cms.message.recordUpdated')}`})
         this.loading = false
       }).catch(error => {
-        this.$alert.error({message: this.$tr('ui.message.errorRequest'), pos: 'bottom'})
+        this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
         console.warn(error)
         this.loading = false
       })
@@ -170,11 +170,11 @@ export default {
         persistent: true
       }).onOk(() => {
         this.$crud.delete('apiRoutes.qslider.slides', slideId).then(response => {
-          this.$alert.info({message: this.$tr('ui.message.recordDeleted')})
+          this.$alert.info({message: this.$tr('isite.cms.message.recordDeleted')})
           //this.slider.slides.splice(pos, 1)
           this.$root.$emit('deleteSlide', 'deleteSlide')
         }).catch(error => {
-          this.$alert.error({message: this.$tr('ui.message.recordNoDeleted'), pos: 'bottom'})
+          this.$alert.error({message: this.$tr('isite.cms.message.recordNoDeleted'), pos: 'bottom'})
         })
       }).onCancel(() => {
       })

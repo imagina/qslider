@@ -15,19 +15,19 @@
           permission: 'slider.sliders',
           extraFormFields: 'Slider.crud-fields.slider',
           create: {
-            title: this.$tr('qslider.layout.newSlider'),
+            title: this.$tr('slider.cms.newSlider'),
           },
           read: {
             columns: [
-              {name: 'id', label: this.$tr('ui.form.id'), field: 'id', style: 'width: 50px'},
-              {name: 'name', label: this.$tr('ui.form.name'), field: 'name', align: 'rigth'},
-              {name: 'systemName', label: this.$tr('ui.form.systemName'), field: 'systemName', align: 'rigth'},
-              {name: 'active', label: this.$tr('ui.form.status'), field: 'active', align: 'left'},
+              {name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id', style: 'width: 50px'},
+              {name: 'name', label: this.$tr('isite.cms.form.name'), field: 'name', align: 'rigth'},
+              {name: 'systemName', label: this.$tr('isite.cms.form.systemName'), field: 'systemName', align: 'rigth'},
+              {name: 'active', label: this.$tr('isite.cms.form.status'), field: 'active', align: 'left'},
               {
-                name: 'created_at', label: this.$tr('ui.form.createdAt'), field: 'createdAt', align: 'left',
+                name: 'created_at', label: this.$tr('isite.cms.form.createdAt'), field: 'createdAt', align: 'left',
                 format: val => val ? this.$trd(val) : '-',
               },
-              {name: 'actions', label: this.$tr('ui.form.actions'), align: 'left'},
+              {name: 'actions', label: this.$tr('isite.cms.form.actions'), align: 'left'},
             ],
             requestParams: {}
           },
@@ -42,9 +42,9 @@
               value: '',
               type: 'input',
               props: {
-                label: `${this.$tr('ui.form.name')}*`,
+                label: `${this.$tr('isite.cms.form.name')}*`,
                 rules: [
-                  val => !!val || this.$tr('ui.message.fieldRequired')
+                  val => !!val || this.$tr('isite.cms.message.fieldRequired')
                 ],
               },
             },
@@ -52,9 +52,9 @@
               value: '',
               type: 'input',
               props: {
-                label: `${this.$tr('ui.form.systemName')}*`,
+                label: `${this.$tr('isite.cms.form.systemName')}*`,
                 rules: [
-                  val => !!val || this.$tr('ui.message.fieldRequired')
+                  val => !!val || this.$tr('isite.cms.message.fieldRequired')
                 ],
               }
             },
@@ -62,10 +62,10 @@
               value: '1',
               type: 'select',
               props: {
-                label: this.$tr('ui.form.status'),
+                label: this.$tr('isite.cms.form.status'),
                 options: [
-                  {label: this.$tr('ui.label.enabled'), value: '1'},
-                  {label: this.$tr('ui.label.disabled'), value: '0'},
+                  {label: this.$tr('isite.cms.label.enabled'), value: '1'},
+                  {label: this.$tr('isite.cms.label.disabled'), value: '0'},
                 ]
               }
             },

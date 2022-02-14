@@ -8,7 +8,7 @@
           <div class="col-12 q-pa-md">
             <!--Search-->
             <q-input clearable v-model="filter.search" dense outlined debounce="800"
-                     :placeholder="`${$tr('ui.label.search',{capitalize : true})}...`"
+                     :placeholder="`${$tr('isite.cms.label.search',{capitalize : true})}...`"
                      style="max-width: 200px" class="float-left"
                      @input="getData({pagination:pagination,search:filter.search})">
               <template v-slot:append>
@@ -30,12 +30,12 @@
                 />
               </q-btn-group>
               <!--Button new record-->
-              <q-btn icon="fas fa-edit" color="green" :label="$tr('qslider.layout.newSlider')"
+              <q-btn icon="fas fa-edit" color="green" :label="$tr('slider.cms.newSlider')"
                      @click="showSliderModal(false)" v-if="$auth.hasAccess('slider.sliders.create')"/>
               <!--Button refresh data-->
               <q-btn color="info" icon="fas fa-sync" class="q-ml-sm"
                      @click="getData({pagination:pagination,search:filter.search},true)">
-                <q-tooltip>{{$tr('ui.label.refresh')}}</q-tooltip>
+                <q-tooltip>{{$tr('isite.cms.label.refresh')}}</q-tooltip>
               </q-btn>
             </div>
           </div>
@@ -73,7 +73,7 @@
                          :to="{name: 'qslider.admin.sliders.show', params: {id: slider.id}}"
                          v-if="$auth.hasAccess('slider.sliders.edit') && hasPermissionRecordMAster(slider).edit">
                     <q-tooltip :offset="[5, 5]">
-                      {{$tr('ui.label.edit')}}
+                      {{$tr('isite.cms.label.edit')}}
                     </q-tooltip>
                   </q-btn>
 
@@ -82,7 +82,7 @@
                          class="q-mx-xs" @click="dialogDeleteSlider.handler(slider.id)"
                          v-if="$auth.hasAccess('slider.sliders.destroy') && hasPermissionRecordMAster(slider).destroy">
                     <q-tooltip :offset="[5, 5]">
-                      {{$tr('ui.label.delete')}}
+                      {{$tr('isite.cms.label.delete')}}
                     </q-tooltip>
                   </q-btn>
                 </div>
@@ -156,7 +156,7 @@
           <!--Header-->
           <q-toolbar class="bg-primary text-white">
             <q-toolbar-title>
-              <label>{{$tr('qslider.layout.createSlider')}}</label>
+              <label>{{$tr('slider.cms.createSlider')}}</label>
             </q-toolbar-title>
             <q-btn flat v-close-popup icon="fas fa-times"/>
           </q-toolbar>
@@ -165,7 +165,7 @@
             <div v-if="sliderToEdit.id" class="col-12 col-md-7 text-right">
               <!--Button add new-->
               <q-btn icon="add" color="green" class="q-mx-xs btn-small"
-                     @click="showSlideModal(false)" :label="$tr('qslider.layout.newSlide')"/>
+                     @click="showSlideModal(false)" :label="$tr('slider.cms.newSlide')"/>
               <!---Draggable-->
               <draggable v-model="sliderToEdit.slides" group="slides">
                 <div v-for="(slide,index) in sliderToEdit.slides" :key="'slide'+index"
@@ -175,12 +175,12 @@
                     <q-btn icon="fas fa-pen" color="green" size="xs" class="q-mx-xs"
                            v-if="hasPermissionRecordMAster(slide).edit"
                            @click="showSlideModal(slide)">
-                      <q-tooltip>{{$tr('ui.label.edit')}}</q-tooltip>
+                      <q-tooltip>{{$tr('isite.cms.label.edit')}}</q-tooltip>
                     </q-btn>
                     <q-btn icon="far fa-trash-alt" color="red" size="xs" class="q-mx-xs"
                            v-if="hasPermissionRecordMAster(slide).destroy"
                            @click="deleteSlide(slide.id, index)">
-                      <q-tooltip>{{$tr('ui.label.delete')}}</q-tooltip>
+                      <q-tooltip>{{$tr('isite.cms.label.delete')}}</q-tooltip>
                     </q-btn>
                   </div>
                 </div>
@@ -188,31 +188,31 @@
             </div>
             <div :class="'col-12 '+ (sliderToEdit.id ? 'col-md-5' : '')">
               <q-form @submit="updateOrCreateSlider(sliderToEdit)" ref="formContent"
-                      @validation-error="$alert.error($tr('ui.message.formInvalid'))"
+                      @validation-error="$alert.error($tr('isite.cms.message.formInvalid'))"
                       autocomplete="off">
-                <q-input :label="`${$tr('ui.form.name')} *`" type="text" outlined dense
-                         :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
+                <q-input :label="`${$tr('isite.cms.form.name')} *`" type="text" outlined dense
+                         :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
                          @input="setSlug()" v-model="sliderToEdit.name"/>
                 <!--System Name-->
-                <q-input :label="`${$tr('ui.form.slug')} *`" type="text" outlined dense
-                         :rules="[val => !!val || $tr('ui.message.fieldRequired')]"
+                <q-input :label="`${$tr('isite.cms.form.slug')} *`" type="text" outlined dense
+                         :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
                          v-model="sliderToEdit.systemName"/>
                 <!--== Slide Active ==-->
-                <q-select class="q-mb-md" :label="$tr('ui.form.status')"
+                <q-select class="q-mb-md" :label="$tr('isite.cms.form.status')"
                           v-model="sliderToEdit.active"
                           emit-value map-options
                           :options="[
-                              {label : $tr('ui.label.enabled'), value : true},
-                              {label : $tr('ui.label.disabled'), value : false},
+                              {label : $tr('isite.cms.label.enabled'), value : true},
+                              {label : $tr('isite.cms.label.disabled'), value : false},
                             ]" outlined dense/>
                 <!--Record Master-->
-                <q-select :label="$tr('ui.form.masterRecord')"
+                <q-select :label="$tr('isite.cms.form.masterRecord')"
                           v-if="canManageRecordMaster"
                           emit-value map-options
                           v-model="sliderToEdit.options.masterRecord"
                           :options="[
-                              {label: this.$tr('ui.label.yes'), value: 1},
-                              {label: this.$tr('ui.label.no'), value: 0},
+                              {label: this.$tr('isite.cms.label.yes'), value: 1},
+                              {label: this.$tr('isite.cms.label.no'), value: 0},
                             ]" outlined dense/>
               </q-form>
             </div>
@@ -221,7 +221,7 @@
           <!--Footer-->
           <q-toolbar>
             <q-toolbar-title></q-toolbar-title>
-            <q-btn color="green" :label="$tr('ui.label.save')" :loading="loading"
+            <q-btn color="green" :label="$tr('isite.cms.label.save')" :loading="loading"
                    @click="$refs.formContent.submit()"/>
           </q-toolbar>
 
@@ -235,7 +235,7 @@
         <q-card class="backend-page" style="minWidth: 80vw; minHeight: 80vh">
           <!--Header-->
           <q-toolbar class="bg-primary text-white">
-            <q-toolbar-title>{{$tr('qslider.layout.updateSlide')}}</q-toolbar-title>
+            <q-toolbar-title>{{$tr('slider.cms.updateSlide')}}</q-toolbar-title>
             <q-btn flat v-close-popup icon="fas fa-times"/>
           </q-toolbar>
 
@@ -246,45 +246,45 @@
                 <locales v-model="locale"/>
               </div>
               <div v-if="locale.success" class="col-12 col-md-7">
-                <q-input :label="`${$tr('ui.form.title')} (${locale.language}) `"
+                <q-input :label="`${$tr('isite.cms.form.title')} (${locale.language}) `"
                          type="text" v-model="locale.formTemplate.title" outlined dense/>
-                <q-input :label="`${$tr('ui.form.caption')} (${locale.language}) `"
+                <q-input :label="`${$tr('isite.cms.form.caption')} (${locale.language}) `"
                          type="text" outlined dense
                          v-model="locale.formTemplate.caption"/>
                 <q-input :label="'URI ('+locale.language+')'" outlined dense
                          type="text" v-model="locale.formTemplate.uri"/>
                 <q-input :label="'URL ('+locale.language+')'" type="text"
                          v-model="locale.formTemplate.url" outlined dense/>
-                <q-input :label="`${$tr('ui.form.image')} URL (${locale.language}) `"
+                <q-input :label="`${$tr('isite.cms.form.image')} URL (${locale.language}) `"
                          type="text" outlined dense
                          v-model="locale.formTemplate.externalImageUrl"/>
-                <q-editor :label="`${$tr('ui.form.description')} (${locale.language}) `"
+                <q-editor :label="`${$tr('isite.cms.form.description')} (${locale.language}) `"
                           v-model="locale.formTemplate.customHtml" style="width: 100%"/>
               </div>
               <div v-if="locale.success" class="col-12 col-md-5">
                 <q-select v-model="locale.formTemplate.options.masterRecord"
-                          :label="$tr('ui.form.masterRecord')"
+                          :label="$tr('isite.cms.form.masterRecord')"
                           v-if="canManageRecordMaster" outlined dense
                           emit-value map-options
                           :options="[
-                              {label: this.$tr('ui.label.yes'), value: 1},
-                              {label: this.$tr('ui.label.no'), value: 0},
+                              {label: this.$tr('isite.cms.label.yes'), value: 1},
+                              {label: this.$tr('isite.cms.label.no'), value: 0},
                             ]"/>
                 <!--== Slide Active ==-->
-                <q-select :label="`${$tr('ui.form.status')} (${locale.language})`"
+                <q-select :label="`${$tr('isite.cms.form.status')} (${locale.language})`"
                           v-model="locale.formTemplate.active" outlined dense
                           emit-value map-options
                           :options="[
-                            {label : $tr('ui.label.enabled'), value : true},
-                            {label : $tr('ui.label.disabled'), value : false},
+                            {label : $tr('isite.cms.label.enabled'), value : true},
+                            {label : $tr('isite.cms.label.disabled'), value : false},
                           ]"/>
-                <q-select :label="`${$tr('ui.form.option')}`" v-model="locale.formTemplate.target"
+                <q-select :label="`${$tr('isite.cms.form.option')}`" v-model="locale.formTemplate.target"
                           emit-value map-options
                           outlined dense :options="[
                             {value: '_self', label: 'Same tab'},
                             {value: '_blank', label: 'New tab'}
                           ]"/>
-                <q-select :label="`${$tr('ui.form.type')}`" v-model="locale.formTemplate.type"
+                <q-select :label="`${$tr('isite.cms.form.type')}`" v-model="locale.formTemplate.type"
                           emit-value map-options
                           outlined dense :options="[
                             {value: 'auto', label: 'Auto'},
@@ -292,7 +292,7 @@
                             {value: 'video', label: 'Video'},
                             {value: 'image', label: 'Image'}
                           ]"/>
-                <div class="input-title">{{`${$tr('ui.form.image')}`}}</div>
+                <div class="input-title">{{`${$tr('isite.cms.form.image')}`}}</div>
                 <media-form
                   entity="Modules\Slider\Entities\Slide"
                   :entity-id="slideToEdit.id ? slideToEdit.id : ''"
@@ -307,7 +307,7 @@
           <!--Footer-->
           <q-toolbar>
             <q-toolbar-title/>
-            <q-btn color="green" :label="$tr('ui.label.save')" icon="fas fa-save"
+            <q-btn color="green" :label="$tr('isite.cms.label.save')" icon="fas fa-save"
                    @click="updateOrCreateSlide(); modalSlide = false"/>
           </q-toolbar>
         </q-card>
@@ -454,7 +454,7 @@
 
           this.loading = false
         }).catch(error => {
-          this.$alert.error({ message: this.$tr('ui.message.errorRequest'), pos: 'bottom' })
+          this.$alert.error({ message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom' })
           this.loading = false//hide loading
         })
       },
@@ -504,20 +504,20 @@
         this.loading = true
         if (this.sliderToEdit.id) {
           this.$crud.update('apiRoutes.qslider.sliders', data.id, data).then(response => {
-            this.$alert.info({ message: this.$tr('ui.message.recordUpdated') })
+            this.$alert.info({ message: this.$tr('isite.cms.message.recordUpdated') })
             this.getData({ pagination: this.pagination, search: this.filter.search }, true)
             this.modalSlider = false
           }).catch(error => {
-            this.$alert.error({ message: this.$tr('ui.message.recordNoUpdated') })
+            this.$alert.error({ message: this.$tr('isite.cms.message.recordNoUpdated') })
             this.loading = false
           })
         } else {
           this.$crud.create('apiRoutes.qslider.sliders', data).then(response => {
-            this.$alert.info({ message: `${this.$tr('ui.message.recordCreated')}` })
+            this.$alert.info({ message: `${this.$tr('isite.cms.message.recordCreated')}` })
             this.getData({ pagination: this.pagination, search: this.filter.search }, true)
             this.modalSlider = false
           }).catch(error => {
-            this.$alert.error({ message: `${this.$tr('ui.message.recordNoCreated')}` })
+            this.$alert.error({ message: `${this.$tr('isite.cms.message.recordNoCreated')}` })
             this.loading = false
           })
         }
@@ -527,18 +527,18 @@
         this.loading = true
         if (this.slideToEdit.id) {
           this.$crud.update('apiRoutes.qslider.slides', this.slideToEdit.id, this.locale.form).then(response => {
-            this.$alert.info({ message: this.$tr('ui.message.recordUpdated') })
+            this.$alert.info({ message: this.$tr('isite.cms.message.recordUpdated') })
             this.getData({ pagination: this.pagination, search: this.filter.search }, true)
           }).catch(error => {
-            this.$alert.error({ message: this.$tr('ui.message.recordNoUpdated') })
+            this.$alert.error({ message: this.$tr('isite.cms.message.recordNoUpdated') })
             this.loading = false
           })
         } else {
           this.$crud.create('apiRoutes.qslider.slides', this.locale.form).then(response => {
-            this.$alert.info({ message: `${this.$tr('ui.message.recordCreated')}` })
+            this.$alert.info({ message: `${this.$tr('isite.cms.message.recordCreated')}` })
             this.getData({ pagination: this.pagination, search: this.filter.search }, true)
           }).catch(error => {
-            this.$alert.error({ message: `${this.$tr('ui.message.recordNoCreated')}` })
+            this.$alert.error({ message: `${this.$tr('isite.cms.message.recordNoCreated')}` })
             this.loading = false
           })
         }
@@ -548,10 +548,10 @@
       deleteSlider (id) {
         this.loading = true
         this.$crud.delete('apiRoutes.qslider.sliders', id).then(response => {
-          this.$alert.info({ message: this.$tr('ui.message.recordDeleted') })
+          this.$alert.info({ message: this.$tr('isite.cms.message.recordDeleted') })
           this.getData({ pagination: this.pagination, search: this.filter.search }, true)
         }).catch(error => {
-          this.$alert.error({ message: this.$tr('ui.message.recordNoDeleted'), pos: 'bottom' })
+          this.$alert.error({ message: this.$tr('isite.cms.message.recordNoDeleted'), pos: 'bottom' })
           this.loading = false
         })
       },
@@ -559,11 +559,11 @@
       deleteSlide (slideId, pos) {
         this.loading = true
         this.$crud.delete('apiRoutes.qslider.slides', slideId).then(response => {
-          this.$alert.info({ message: this.$tr('ui.message.recordDeleted') })
+          this.$alert.info({ message: this.$tr('isite.cms.message.recordDeleted') })
           this.sliderToEdit.slides.splice(pos, 1)
           this.getData({ pagination: this.pagination, search: this.filter.search }, true)
         }).catch(error => {
-          this.$alert.error({ message: this.$tr('ui.message.recordNoDeleted'), pos: 'bottom' })
+          this.$alert.error({ message: this.$tr('isite.cms.message.recordNoDeleted'), pos: 'bottom' })
           this.loading = false
         })
       },

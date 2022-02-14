@@ -71,7 +71,7 @@
         }).catch( error => {
           console.warn( error )
           this.loading = false
-          this.$alert.error({ message: this.$tr('ui.message.errorRequest'), pos: 'bottom' })
+          this.$alert.error({ message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom' })
         })
       },
     }

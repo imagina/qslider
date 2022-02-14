@@ -40,7 +40,7 @@
 <script>
   import sliderForm from '@imagina/qslider/_components/admin/slider/form'
   import sliderSlides from '@imagina/qslider/_components/admin/slider/slides'
-  
+
   export default {
     components:{
       sliderForm,
@@ -73,7 +73,7 @@
         }).catch( error => {
           console.warn( error )
           this.loading = false
-          this.$alert.error({ message: this.$tr('ui.message.errorRequest'), pos: 'bottom' })
+          this.$alert.error({ message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom' })
         })
       },
     }
