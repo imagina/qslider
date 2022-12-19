@@ -126,14 +126,15 @@ export default {
               ]
             }
           },
-          toMobile: {
-            value: '0',
+          responsive: {
+            value: '1',
             type: 'select',
             props: {
-              label: this.$tr('isite.cms.label.mobil'),
+              label: this.$tr('isite.cms.label.responsive'),
               options: [
-                {label: this.$tr('isite.cms.label.yes'), value: '1'},
-                {label: this.$tr('isite.cms.label.no'), value: '0'},
+                {label: `${this.$tr('isite.cms.label.mobile')} & PC`, value: '1'},
+                {label: "PC", value: '2'},
+                {label: this.$tr('isite.cms.label.mobile'), value: '3'},
               ]
             }
           },
