@@ -1,148 +1,159 @@
 <template></template>
 <script>
-  export default {
-    data() {
+export default {
+  data() {
+    return {
+      crudId: this.$uid()
+    }
+  },
+  computed: {
+    crudData() {
       return {
-        crudId: this.$uid()
-      }
-    },
-    computed: {
-      crudData() {
-        return {
-          crudId: this.crudId,
-          entityName: config("main.qslider.entityNames.slide"),
-          apiRoute: 'apiRoutes.qslider.slides',
-          permission: 'slider.slides',
-          extraFormFields: 'Slider.crud-fields.slides',
-          create: {
-            title: this.$tr('slider.cms.newSlide'),
-          },
-          read: {
-            columns: [],
-            requestParams: {}
-          },
-          update: {
-            title: this.$tr('slider.cms.updateSlide'),
-          },
-          delete: true,
-          formLeft: {
-            id: {value: ''},
-            userId: {value: this.$store.state.quserAuth.userId},
-            title: {
-              value: '',
-              type: 'input',
-              isTranslatable : true,
-              props: {
-                label: `${this.$tr('isite.cms.form.title')}*`,
-                rules: [
-                  val => !!val || this.$tr('isite.cms.message.fieldRequired')
-                ],
-              },
-            },
-            caption: {
-              value: '',
-              type: 'input',
-              isTranslatable : true,
-              props: {label: this.$tr('slider.cms.label.buttonText')},
-            },
-            uri: {
-              value: '',
-              type: 'input',
-              isTranslatable : true,
-              props: {
-                label: 'URI',
-              },
-            },
-            url: {
-              value: '',
-              type: 'input',
-              isTranslatable : true,
-              props: {
-                label: 'URL',
-              },
-            },
-            externalImageUrl: {
-              value: '',
-              type: 'input',
-              isTranslatable : true,
-              props: {
-                label: `${this.$tr('isite.cms.form.image')}`,
-              },
-            },
-            summary: {
-              value: '',
-              type: 'input',
-              isTranslatable: true,
-              props: {
-                type: 'textarea',
-                label: `${this.$tr('isite.cms.form.summary')}`,
-              }
-            },
-            customHtml: {
-              value: '',
-              type: 'html',
-              isTranslatable: true,
-              props: {
-                label: `${this.$tr('isite.cms.form.description')}`,
-              }
+        crudId: this.crudId,
+        entityName: config("main.qslider.entityNames.slide"),
+        apiRoute: 'apiRoutes.qslider.slides',
+        permission: 'slider.slides',
+        extraFormFields: 'Slider.crud-fields.slides',
+        create: {
+          title: this.$tr('slider.cms.newSlide'),
+        },
+        read: {
+          columns: [],
+          requestParams: {}
+        },
+        update: {
+          title: this.$tr('slider.cms.updateSlide'),
+        },
+        delete: true,
+        formLeft: {
+          id: {value: ''},
+          userId: {value: this.$store.state.quserAuth.userId},
+          title: {
+            value: '',
+            type: 'input',
+            isTranslatable: true,
+            props: {
+              label: `${this.$tr('isite.cms.form.title')}*`,
+              rules: [
+                val => !!val || this.$tr('isite.cms.message.fieldRequired')
+              ],
             },
           },
-          formRight: {
-            active: {
-              value: '1',
-              type: 'select',
-              isTranslatable : true,
-              props: {
-                label: this.$tr('isite.cms.form.status'),
-                options: [
-                  {label: this.$tr('isite.cms.label.enabled'), value: '1'},
-                  {label: this.$tr('isite.cms.label.disabled'), value: '0'},
-                ]
-              }
+          caption: {
+            value: '',
+            type: 'input',
+            isTranslatable: true,
+            props: {label: this.$tr('slider.cms.label.buttonText')},
+          },
+          uri: {
+            value: '',
+            type: 'input',
+            isTranslatable: true,
+            props: {
+              label: 'URI',
             },
-            targetField: {
-              name : 'target',
-              value: null,
-              type: 'select',
-              props: {
-                label: this.$tr('isite.cms.form.option'),
-                options: [
-                  {label: 'Same tab', value: '_self'},
-                  {label: 'New tab', value: '_blank'}
-                ]
-              }
+          },
+          url: {
+            value: '',
+            type: 'input',
+            isTranslatable: true,
+            props: {
+              label: 'URL',
             },
-            typeField: {
-              name : 'type',
-              value: null,
-              type: 'select',
-              props: {
-                label: this.$tr('isite.cms.form.type'),
-                options: [
-                  {label: 'Auto', value: 'auto'},
-                  {label: '360', value: '360'},
-                  {label: 'Video', value: 'video'},
-                  {label: 'Image', value: 'image'}
-                ]
-              }
+          },
+          externalImageUrl: {
+            value: '',
+            type: 'input',
+            isTranslatable: true,
+            props: {
+              label: `${this.$tr('isite.cms.form.image')}`,
             },
-            mediasSingle: {
-              value: {},
-              type: 'media',
-              props: {
-                label: this.$tr('isite.cms.form.image'),
-                zone: 'slideimage',
-                entity: "Modules\\Slider\\Entities\\Slide",
-                entityId: null
-              }
+          },
+          summary: {
+            value: '',
+            type: 'input',
+            isTranslatable: true,
+            props: {
+              type: 'textarea',
+              label: `${this.$tr('isite.cms.form.summary')}`,
             }
           },
-        }
-      },
-      //Crud info
-      crudInfo() {
-        return this.$store.state.qcrudComponent.component[this.crudId] || {}
+          customHtml: {
+            value: '',
+            type: 'html',
+            isTranslatable: true,
+            props: {
+              label: `${this.$tr('isite.cms.form.description')}`,
+            }
+          },
+        },
+        formRight: {
+          active: {
+            value: '1',
+            type: 'select',
+            isTranslatable: true,
+            props: {
+              label: this.$tr('isite.cms.form.status'),
+              options: [
+                {label: this.$tr('isite.cms.label.enabled'), value: '1'},
+                {label: this.$tr('isite.cms.label.disabled'), value: '0'},
+              ]
+            }
+          },
+          targetField: {
+            name: 'target',
+            value: null,
+            type: 'select',
+            props: {
+              label: this.$tr('isite.cms.form.option'),
+              options: [
+                {label: 'Same tab', value: '_self'},
+                {label: 'New tab', value: '_blank'}
+              ]
+            }
+          },
+          typeField: {
+            name: 'type',
+            value: null,
+            type: 'select',
+            props: {
+              label: this.$tr('isite.cms.form.type'),
+              options: [
+                {label: 'Auto', value: 'auto'},
+                {label: '360', value: '360'},
+                {label: 'Video', value: 'video'},
+                {label: 'Image', value: 'image'}
+              ]
+            }
+          },
+          toMobile: {
+            value: '0',
+            type: 'select',
+            props: {
+              label: this.$tr('isite.cms.label.mobil'),
+              options: [
+                {label: this.$tr('isite.cms.label.yes'), value: '1'},
+                {label: this.$tr('isite.cms.label.no'), value: '0'},
+              ]
+            }
+          },
+          mediasSingle: {
+            value: {},
+            type: 'media',
+            props: {
+              label: this.$tr('isite.cms.form.image'),
+              zone: 'slideimage',
+              entity: "Modules\\Slider\\Entities\\Slide",
+              entityId: null
+            }
+          }
+        },
       }
     },
-  }
+    //Crud info
+    crudInfo() {
+      return this.$store.state.qcrudComponent.component[this.crudId] || {}
+    }
+  },
+}
 </script>
