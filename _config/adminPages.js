@@ -5,11 +5,11 @@ export default {
     activated: true,
     path: '/slider/index',
     name: 'qslider.admin.sliders',
-    crud : import('@imagina/qslider/_crud/sliders'),
+    crud: import('@imagina/qslider/_crud/sliders'),
     page: () => import('@imagina/qcrud/_pages/admin/crudPage'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'slider.cms.sidebar.adminSlider',
-    icon: 'fas fa-file-export',
+    icon: 'fa-light fa-rectangle-vertical-history',
     authenticated: true,
     subHeader: {refresh: true}
   },
@@ -21,9 +21,9 @@ export default {
     page: () => import('@imagina/qslider/_pages/admin/sliders/form'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'slider.cms.sidebar.adminSliderEdit',
-    icon: 'fas fa-image',
+    icon: 'fa-light fa-image',
     authenticated: true,
-    subHeader : {
+    subHeader: {
       refresh: true,
       breadcrumb: ['qslider.index']
     }
@@ -36,7 +36,7 @@ export default {
     page: () => import('@imagina/qslider/_pages/admin/slide/create.vue'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'slider.cms.sidebar.adminIndex',
-    icon: 'fas fa-images',
+    icon: 'fa-light fa-image',
     authenticated: true,
   },
   updateSlide: {
@@ -47,7 +47,7 @@ export default {
     page: () => import('@imagina/qslider/_pages/admin/slide/show.vue'),
     layout: () => import('@imagina/qsite/_layouts/master.vue'),
     title: 'slider.cms.sidebar.adminIndex',
-    icon: 'fas fa-images',
+    icon: 'fa-light fa-image',
     authenticated: true,
   },
 }
