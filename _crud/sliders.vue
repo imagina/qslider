@@ -22,6 +22,8 @@
               {name: 'id', label: this.$tr('isite.cms.form.id'), field: 'id', style: 'width: 50px'},
               {name: 'name', label: this.$tr('isite.cms.form.name'), field: 'name', align: 'rigth'},
               {name: 'systemName', label: this.$tr('isite.cms.form.systemName'), field: 'systemName', align: 'rigth'},
+              {name: 'type', label: this.$tr('isite.cms.form.type'), field: 'type', align: 'rigth'},
+
               {name: 'active', label: this.$tr('isite.cms.form.status'), field: 'active', align: 'left'},
               {
                 name: 'created_at', label: this.$tr('isite.cms.form.createdAt'), field: 'createdAt', align: 'left',
@@ -66,6 +68,17 @@
                 options: [
                   {label: this.$tr('isite.cms.label.enabled'), value: '1'},
                   {label: this.$tr('isite.cms.label.disabled'), value: '0'},
+                ]
+              }
+            },
+            type: {
+              value: 'slider',
+              type: 'select',
+              props: {
+                label: this.$tr('isite.cms.form.type'),
+                options: [
+                  {label: this.$tr('isite.cms.form.slider'), value: 'slider'},
+                  {label: this.$tr('isite.cms.form.banner'), value: 'banner'},
                 ]
               }
             },

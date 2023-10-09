@@ -33,15 +33,13 @@
           outlined
           dense/>
         <q-select
-          class="q-mt-md"
-          :label="$tr('isite.cms.form.masterRecord')"
-          v-if="canManageRecordMaster && form.options"
+          :label="$tr('isite.cms.form.type')"
+          v-model="form.type"
           emit-value
           map-options
-          v-model="form.options.masterRecord"
           :options="[
-            {label: this.$tr('isite.cms.label.yes'), value: 1},
-            {label: this.$tr('isite.cms.label.no'), value: 0},
+            {label : $tr('isite.cms.label.slider'), value : 'slider'},
+            {label : $tr('isite.cms.label.banner'), value : 'banner'},
           ]"
           outlined
           dense/>

@@ -6,7 +6,7 @@
         <crud :crud-data="import('@imagina/qslider/_crud/slides')" ref="crudSlide"
               type="button-create" :crud-props="{unelevated : true, rounded : true}"
               @updated="$emit('refresh')" @created="$emit('refresh')"
-              :custom-data="{formLeft : {sliderId: {value : $route.params.id}}}"/>
+              :custom-data="{formLeft : {sliderId: {value : $route.params.id}}, formRight: { codeAds} }"/>
       </div>
       <!--Items-->
       <draggable @change="updateOrderSlides" v-model="slider.slides" group="slides">
@@ -112,6 +112,22 @@ export default {
     },
   },
   watch: {},
+  computed: {
+    codeAds(){
+      if(this.slider.type == 'banner'){
+        return {
+          value: '',
+          type: 'input',
+          isTranslatable: true,
+          props: {
+            type: 'textarea',
+            label: `${this.$tr('isite.cms.form.codeAds')}`,
+          }
+        }
+      }
+      return {}
+    }
+  },
   methods: {
     init() {
       this.openEditSlide()
