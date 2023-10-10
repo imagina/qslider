@@ -7,5 +7,9 @@ export default {
     codeAds  : 'Code ADS',
     showAsPopup : 'Show as Popup',
     buttonText: 'Button Text',
+  },
+  form : {
+    slider: 'Slider',
+    banner : 'Banner'
   }
 }

@@ -8,5 +8,9 @@ export default {
     codeAds  : 'Codigo ADS',
     showAsPopup : 'Mostrar como ventana emergente',
     buttonText: 'Texto del Botón',
+  },
+  form : {
+    slider: 'Slider',
+    banner : 'Banner'
   }
 }
