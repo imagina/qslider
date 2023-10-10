@@ -38,8 +38,8 @@
           emit-value
           map-options
           :options="[
-            {label : $tr('isite.cms.label.slider'), value : 'slider'},
-            {label : $tr('isite.cms.label.banner'), value : 'banner'},
+            {label : $tr('slider.cms.form.slider'), value : 'slider'},
+            {label : $tr('slider.cms.form.banner'), value : 'banner'},
           ]"
           outlined
           dense/>
