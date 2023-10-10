@@ -77,8 +77,8 @@
               props: {
                 label: this.$tr('isite.cms.form.type'),
                 options: [
-                  {label: this.$tr('isite.cms.form.slider'), value: 'slider'},
-                  {label: this.$tr('isite.cms.form.banner'), value: 'banner'},
+                  {label: this.$tr('slider.cms.form.slider'), value: 'slider'},
+                  {label: this.$tr('slider.cms.form.banner'), value: 'banner'},
                 ]
               }
             },

@@ -121,7 +121,7 @@ export default {
           isTranslatable: true,
           props: {
             type: 'textarea',
-            label: `${this.$tr('isite.cms.form.codeAds')}`,
+            label: `${this.$tr('slider.cms.label.codeAds')}`
           }
         }
       }
