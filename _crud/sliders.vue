@@ -50,16 +50,6 @@
                 ],
               },
             },
-            systemName: {
-              value: '',
-              type: 'input',
-              props: {
-                label: `${this.$tr('isite.cms.form.systemName')}*`,
-                rules: [
-                  val => !!val || this.$tr('isite.cms.message.fieldRequired')
-                ],
-              }
-            },
             active: {
               value: '1',
               type: 'select',
