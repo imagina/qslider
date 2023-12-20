@@ -19,6 +19,7 @@
           type="text"
           outlined
           dense
+          readonly
           :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
           v-model="form.systemName"/>
         <q-select
