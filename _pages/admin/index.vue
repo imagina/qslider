@@ -602,7 +602,7 @@
     }
   }
 </script>
-<style lang="stylus">
+<style lang="sass">
   #sliderModalEdit
     .image
       background-repeat no-repeat
