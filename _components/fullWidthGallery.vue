@@ -61,7 +61,7 @@
         }
     }
 </script>
-<style lang="sass">
+<style lang="scss">
 
     .custom-caption
         text-align: center
