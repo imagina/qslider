@@ -603,12 +603,14 @@
   }
 </script>
 <style lang="scss">
-  #sliderModalEdit
-    .image
-      background-repeat no-repeat
-      background-size contain
-      background-position center center
-      cursor all-scroll
-      height 150px
-      overflow hidden
+  #sliderModalEdit {
+    .image {
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center center;
+      cursor: all-scroll;
+      height: 150px;
+      overflow: hidden;
+    }
+  }
 </style>
