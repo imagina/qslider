@@ -30,8 +30,8 @@
 </template>
 
 <script>
-  import sliderForm from '@imagina/qslider/_components/admin/slider/form'
-  import sliderSlides from '@imagina/qslider/_components/admin/slider/slides'
+  import sliderForm from 'modules/qslider/_components/admin/slider/form'
+  import sliderSlides from 'modules/qslider/_components/admin/slider/slides'
 
   export default {
     components:{
