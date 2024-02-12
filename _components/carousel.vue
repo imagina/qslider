@@ -23,7 +23,7 @@
 </template>
 <script>
   /*Services*/
-  import sliderServices from '@imagina/qslider/_services/slider'
+  import sliderServices from 'modules/qslider/_services/slider'
   export default {
     props: {
       id : {default: 2}

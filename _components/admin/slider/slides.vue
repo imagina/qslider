@@ -3,7 +3,7 @@
     <div class="col-12">
       <!---Component CRUD Slided -->
       <div class="text-right q-mb-md">
-        <crud :crud-data="import('@imagina/qslider/_crud/slides')" ref="crudSlide"
+        <crud :crud-data="import('modules/qslider/_crud/slides')" ref="crudSlide"
               type="button-create" :crud-props="{unelevated : true, rounded : true}"
               @updated="$emit('refresh')" @created="$emit('refresh')"
               :custom-data="{formLeft : {sliderId: {value : $route.params.id}}, formRight: { codeAds} }"/>
@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import renderMedia from '@imagina/qslider/_components/admin/slide/renderMedia'
+import renderMedia from 'modules/qslider/_components/admin/slide/renderMedia'
 import draggable from 'vuedraggable'
 
 export default {
