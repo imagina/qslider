@@ -170,6 +170,7 @@
               <draggable
                 v-model="sliderToEdit.slides"
                 group="slides"
+                item-key="name"
               >
                 <template #item="{ slide, index }">
                   <div
