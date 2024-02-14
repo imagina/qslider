@@ -9,27 +9,35 @@
               :custom-data="{formLeft : {sliderId: {value : $route.params.id}}, formRight: { codeAds} }"/>
       </div>
       <!--Items-->
-      <draggable @change="updateOrderSlides" v-model="slider.slides" group="slides">
-        <!--Item-->
-        <q-card class="my-card q-mb-md" v-for="(slide,index) in slider.slides" :key="'slide'+index">
-          <div class="row items-center q-pa-sm">
-            <!--Title-->
-            <div class="col-6">
-              <q-chip square icon="fas fa-images" text-color="white" :color="slide.active ? 'positive' : 'grey'">
-                {{ slide.title }}
-              </q-chip>
+      <draggable
+        @change="updateOrderSlides"
+        v-model="slider.slides"
+        group="slides"
+        item-key="name"
+      >
+        <template #item="{ slide, index }">
+          <q-card
+            class="my-card q-mb-md"
+            :key="'slide'+index"
+          >
+            <div class="row items-center q-pa-sm">
+              <!--Title-->
+              <div class="col-6">
+                <q-chip square icon="fas fa-images" text-color="white" :color="slide.active ? 'positive' : 'grey'">
+                  {{ slide.title }}
+                </q-chip>
+              </div>
+              <!--Actions-->
+              <div class="col-6 text-right">
+                <q-btn color="blue-4" size="sm" round icon="fas fa-pen" unelevated class="q-mr-sm"
+                       @click="$refs.crudSlide.update(slide)"/>
+                <q-btn @click="deleteSlideDialog(slide.id, index)" color="red" unelevated
+                       size="sm" round icon="far fa-trash-alt"/>
+              </div>
             </div>
-            <!--Actions-->
-            <div class="col-6 text-right">
-              <q-btn color="blue-4" size="sm" round icon="fas fa-pen" unelevated class="q-mr-sm"
-                     @click="$refs.crudSlide.update(slide)"/>
-              <q-btn @click="deleteSlideDialog(slide.id, index)" color="red" unelevated
-                     size="sm" round icon="far fa-trash-alt"/>
-            </div>
-          </div>
-          <q-separator/>
-          <div class="full-width" v-if="slide.imageUrl">
-            <iframe
+            <q-separator/>
+            <div class="full-width" v-if="slide.imageUrl">
+              <iframe
                 v-if="(typeof slide.imageUrl == 'string') && slide.imageUrl.includes('youtube.com')"
                 width="100%"
                 height="300"
@@ -37,17 +45,17 @@
                 frameborder="0"
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
-            </iframe>
-            <video
+              </iframe>
+              <video
                 width="100%"
                 height="300"
                 v-else-if="(typeof slide.imageUrl == 'mp4') && slide.imageUrl.includes('mp4')"
                 class='img-responsive center-block'
                 loop
                 :controls='false'>
-              <source :src="slide.imageUrl" type='video/mp4'>
-            </video>
-            <div
+                <source :src="slide.imageUrl" type='video/mp4'>
+              </video>
+              <div
                 v-else
                 :style="`
         background: url('${slide.mediaFiles.slideimage ? slide.mediaFiles.slideimage.mediumThumb : ''}');
@@ -56,10 +64,10 @@
         height: 300px;
         display: block;
         max-width: 100%;`">
+              </div>
             </div>
-          </div>
-          <div class="full-width" v-else-if="slide.url">
-            <iframe
+            <div class="full-width" v-else-if="slide.url">
+              <iframe
                 v-if="(typeof slide.url == 'string') && slide.url.includes('youtube.com')"
                 width="100%"
                 height="300"
@@ -67,18 +75,20 @@
                 frameborder="0"
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
-            </iframe>
-            <video
+              </iframe>
+              <video
                 width="100%"
                 height="300"
                 v-else-if="(typeof slide.url == 'mp4') && slide.url.includes('mp4')"
                 class='img-responsive center-block'
                 loop
                 :controls='false'>
-              <source :src="slide.url" type='video/mp4'>
-            </video>
-          </div>
-        </q-card>
+                <source :src="slide.url" type='video/mp4'>
+              </video>
+            </div>
+          </q-card>
+        </template>
+        <!--Item-->
       </draggable>
     </div>
     <!--Loading-->
