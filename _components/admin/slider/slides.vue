@@ -121,6 +121,7 @@ export default {
       })
     },
   },
+  emits: ['refresh'],
   watch: {},
   computed: {
     codeAds(){
