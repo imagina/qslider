@@ -32,6 +32,7 @@
 <script>
   import sliderForm from 'modules/qslider/_components/admin/slider/form'
   import sliderSlides from 'modules/qslider/_components/admin/slider/slides'
+  import { eventBus } from 'src/plugins/utils'
 
   export default {
     components:{
@@ -39,8 +40,8 @@
       sliderSlides
     },
     beforeDestroy () {
-      this.$root.$off('deleteSlide', this.getSlider)
-      this.$root.$off('page.data.refresh')
+      eventBus.off('deleteSlide', this.getSlider)
+      eventBus.off('page.data.refresh')
     },
     mounted() {
       this.init()
@@ -53,9 +54,9 @@
     },
     methods:{
       init(){
-        this.$root.$on('page.data.refresh', () => this.getSlider(true))//Listen refresh event
+        eventBus.on('page.data.refresh', () => this.getSlider(true))//Listen refresh event
         this.getSlider(true)
-        this.$root.$on('deleteSlide', this.getSlider)
+        eventBus.on('deleteSlide', this.getSlider)
       },
       //Get slider data
       getSlider( refresh = false ){

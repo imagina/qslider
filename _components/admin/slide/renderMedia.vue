@@ -5,6 +5,7 @@
 </template>
 
 <script>
+  import { eventBus } from 'src/plugins/utils'
   export default {
     props:{
       slide:{
@@ -31,7 +32,7 @@
           this.$crud.delete('apiRoutes.qslider.slides', slideId).then(response => {
             this.$alert.info({ message: this.$tr('isite.cms.message.recordDeleted') })
             //this.slider.slides.splice(pos, 1)
-            this.$root.$emit('deleteSlide', 'deleteSlide')
+            eventBus.emit('deleteSlide', 'deleteSlide')
           }).catch(error => {
             this.$alert.error({ message: this.$tr('isite.cms.message.recordNoDeleted'), pos: 'bottom' })
           })
