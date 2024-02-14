@@ -10,7 +10,7 @@
             <q-input clearable v-model="filter.search" dense outlined debounce="800"
                      :placeholder="`${$tr('isite.cms.label.search',{capitalize : true})}...`"
                      style="max-width: 200px" class="float-left"
-                     @input="getData({pagination:pagination,search:filter.search})">
+                     @update:modelValue="getData({pagination:pagination,search:filter.search})">
               <template v-slot:append>
                 <q-icon name="search"/>
               </template>
@@ -93,7 +93,7 @@
                   v-if="pagination.rowsNumber > 1"
                   v-model="pagination.page"
                   color="primary"
-                  @input="getData({pagination:pagination,search:filter.search})"
+                  @update:modelValue="getData({pagination:pagination,search:filter.search})"
                   :max="pagination.rowsNumber"
                   :max-pages="6"
                   boundary-links
