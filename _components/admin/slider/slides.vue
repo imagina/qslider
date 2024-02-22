@@ -13,9 +13,9 @@
         @change="updateOrderSlides"
         v-model="slider.slides"
         group="slides"
-        item-key="name"
+        item-key="id"
       >
-        <template #item="{ slide, index }">
+        <template #item="{ element, index }">
           <q-card
             class="my-card q-mb-md"
             :key="'slide'+index"
@@ -23,25 +23,25 @@
             <div class="row items-center q-pa-sm">
               <!--Title-->
               <div class="col-6">
-                <q-chip square icon="fas fa-images" text-color="white" :color="slide.active ? 'positive' : 'grey'">
-                  {{ slide.title }}
+                <q-chip square icon="fas fa-images" text-color="white" :color="element.active ? 'positive' : 'grey'">
+                  {{ element.title }}
                 </q-chip>
               </div>
               <!--Actions-->
               <div class="col-6 text-right">
                 <q-btn color="blue-4" size="sm" round icon="fas fa-pen" unelevated class="q-mr-sm"
-                       @click="$refs.crudSlide.update(slide)"/>
-                <q-btn @click="deleteSlideDialog(slide.id, index)" color="red" unelevated
+                       @click="$refs.crudSlide.update(element)"/>
+                <q-btn @click="deleteSlideDialog(element.id, index)" color="red" unelevated
                        size="sm" round icon="far fa-trash-alt"/>
               </div>
             </div>
             <q-separator/>
-            <div class="full-width" v-if="slide.imageUrl">
+            <div class="full-width" v-if="element.imageUrl">
               <iframe
-                v-if="(typeof slide.imageUrl == 'string') && slide.imageUrl.includes('youtube.com')"
+                v-if="(typeof element.imageUrl == 'string') && element.imageUrl.includes('youtube.com')"
                 width="100%"
                 height="300"
-                :src="slide.imageUrl"
+                :src="element.imageUrl"
                 frameborder="0"
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
@@ -49,16 +49,16 @@
               <video
                 width="100%"
                 height="300"
-                v-else-if="(typeof slide.imageUrl == 'mp4') && slide.imageUrl.includes('mp4')"
+                v-else-if="(typeof element.imageUrl == 'mp4') && element.imageUrl.includes('mp4')"
                 class='img-responsive center-block'
                 loop
                 :controls='false'>
-                <source :src="slide.imageUrl" type='video/mp4'>
+                <source :src="element.imageUrl" type='video/mp4'>
               </video>
               <div
                 v-else
                 :style="`
-        background: url('${slide.mediaFiles.slideimage ? slide.mediaFiles.slideimage.mediumThumb : ''}');
+        background: url('${element.mediaFiles.slideimage ? element.mediaFiles.slideimage.mediumThumb : ''}');
         background-size: cover;
         background-position: center;
         height: 300px;
@@ -66,12 +66,12 @@
         max-width: 100%;`">
               </div>
             </div>
-            <div class="full-width" v-else-if="slide.url">
+            <div class="full-width" v-else-if="element.url">
               <iframe
-                v-if="(typeof slide.url == 'string') && slide.url.includes('youtube.com')"
+                v-if="(typeof element.url == 'string') && element.url.includes('youtube.com')"
                 width="100%"
                 height="300"
-                :src="slide.url"
+                :src="element.url"
                 frameborder="0"
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen>
@@ -79,11 +79,11 @@
               <video
                 width="100%"
                 height="300"
-                v-else-if="(typeof slide.url == 'mp4') && slide.url.includes('mp4')"
+                v-else-if="(typeof element.url == 'mp4') && element.url.includes('mp4')"
                 class='img-responsive center-block'
                 loop
                 :controls='false'>
-                <source :src="slide.url" type='video/mp4'>
+                <source :src="element.url" type='video/mp4'>
               </video>
             </div>
           </q-card>
