@@ -39,7 +39,7 @@
       sliderForm,
       sliderSlides
     },
-    beforeDestroy () {
+    beforeUnmount () {
       eventBus.off('deleteSlide', this.getSlider)
       eventBus.off('page.data.refresh')
     },

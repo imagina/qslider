@@ -53,7 +53,7 @@
         slider:{}
       }
     },
-    beforeDestroy () {
+    beforeUnmount () {
       eventBus.off('deleteSlide', this.getSlider)
     },
     created() {
