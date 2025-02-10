@@ -33,10 +33,7 @@ export default {
             type: 'input',
             isTranslatable: true,
             props: {
-              label: `${this.$tr('isite.cms.form.title')}*`,
-              rules: [
-                val => !!val || this.$tr('isite.cms.message.fieldRequired')
-              ],
+              label: `${this.$tr('isite.cms.form.title')}`
             },
           },
           caption: {
