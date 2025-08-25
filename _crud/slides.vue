@@ -194,7 +194,7 @@ export default {
             props: {
               label: this.$tr('isite.cms.form.image'),
               zone: 'slideimage',
-              entity: 'Modules\\Slider\\Entities\\Slide',
+              entity: 'Modules\\Slider\\Models\\Slide',
               entityId: null,
             },
           },
