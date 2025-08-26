@@ -8,12 +8,12 @@
         @validation-error="$alert.error($tr('isite.cms.message.formInvalid'))"
         autocomplete="off">
         <q-input
-          :label="`${$tr('isite.cms.form.name')} *`"
+          :label="`${$tr('isite.cms.form.title')} *`"
           type="text"
           outlined
           dense
           :rules="[val => !!val || $tr('isite.cms.message.fieldRequired')]"
-          v-model="form.name"/>
+          v-model="form.title"/>
         <q-input
           :label="`${$tr('isite.cms.form.slug')} *`"
           type="text"
@@ -30,17 +30,6 @@
           :options="[
             {label : $tr('isite.cms.label.enabled'), value : 1},
             {label : $tr('isite.cms.label.disabled'), value : 0},
-          ]"
-          outlined
-          dense/>
-        <q-select
-          :label="$tr('isite.cms.form.type')"
-          v-model="form.type"
-          emit-value
-          map-options
-          :options="[
-            {label : $tr('slider.cms.form.slider'), value : 'slider'},
-            {label : $tr('slider.cms.form.banner'), value : 'banner'},
           ]"
           outlined
           dense/>

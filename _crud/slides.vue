@@ -23,7 +23,7 @@ export default {
         },
         update: {
           title: this.$tr('slider.cms.updateSlide'),
-          requestParams: { include: 'locatable' },
+          requestParams: { include: 'locatable,translations' },
         },
         delete: true,
         formLeft: {
@@ -62,7 +62,6 @@ export default {
           externalImageUrl: {
             value: '',
             type: 'input',
-            isTranslatable: true,
             props: {
               label: `${this.$tr('isite.cms.form.image')}`,
             },
@@ -166,7 +165,7 @@ export default {
               apiRoute: this.crudInfo.locatable?.countryId
                 ? 'apiRoutes.qlocations.provinces'
                 : false,
-              select: { label: 'name', id: 'id' },              
+              select: { label: 'name', id: 'id' },
               requestParams: { filter: { country: this.crudInfo.locatable?.countryId }, include: 'translations' },
             },
           },
@@ -195,7 +194,7 @@ export default {
             props: {
               label: this.$tr('isite.cms.form.image'),
               zone: 'slideimage',
-              entity: 'Modules\\Slider\\Models\\Slide',
+              entity: 'Modules\\Islider\\Models\\Slide',
               entityId: null,
             },
           },

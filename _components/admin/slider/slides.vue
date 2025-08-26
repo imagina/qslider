@@ -11,7 +11,7 @@
       <!--Items-->
       <draggable
         @change="updateOrderSlides"
-        v-model="slider.slides"
+        v-model="mappedSlides"
         group="slides"
         item-key="id"
       >
@@ -58,12 +58,12 @@
               <div
                 v-else
                 :style="`
-        background: url('${element.mediaFiles.slideimage ? element.mediaFiles.slideimage.mediumThumb : ''}');
-        background-size: cover;
-        background-position: center;
-        height: 300px;
-        display: block;
-        max-width: 100%;`">
+                  background: url('${element.imageUrl}');
+                  background-size: cover;
+                  background-position: center;
+                  height: 300px;
+                  display: block;
+                  max-width: 100%;`">
               </div>
             </div>
             <div class="full-width" v-else-if="element.url">
@@ -125,6 +125,19 @@ export default {
   emits: ['refresh'],
   watch: {},
   computed: {
+    mappedSlides(){
+      let slides = this.slider.slides || []
+      return slides.map(slide => {
+        let imageUrl = slide.externalImageUrl
+        if(!imageUrl){
+          imageUrl = slide.files.slideimage?.thumbnails?.mediumThumb ?? ''
+        }
+        return {
+          ...slide,
+          imageUrl
+        }
+      })
+    },
     codeAds(){
       if(this.slider.type == 'banner'){
         return {
