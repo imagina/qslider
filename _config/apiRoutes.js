@@ -1,4 +1,4 @@
-const moduleName = 'slider';
+const moduleName = 'islider';
 const moduleVersion = 'v1';
 const urlBase = `/${moduleName}/${moduleVersion}`
 
