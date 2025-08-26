@@ -12,7 +12,7 @@ export default {
         crudId: this.crudId,
         entityName: config('main.qslider.entityNames.slide'),
         apiRoute: 'apiRoutes.qslider.slides',
-        permission: 'slider.slides',
+        permission: 'islider.slides',
         extraFormFields: 'Slider.crud-fields.slides',
         create: {
           title: this.$tr('slider.cms.newSlide'),
@@ -149,6 +149,7 @@ export default {
             },
             loadOptions: {
               apiRoute: 'apiRoutes.qlocations.countries',
+              requestParams: { include: 'translations' },
               select: { label: 'name', id: 'id' },
             },
           },
@@ -165,8 +166,8 @@ export default {
               apiRoute: this.crudInfo.locatable?.countryId
                 ? 'apiRoutes.qlocations.provinces'
                 : false,
-              select: { label: 'name', id: 'id' },
-              requestParams: { filter: { country: this.crudInfo.locatable?.countryId } },
+              select: { label: 'name', id: 'id' },              
+              requestParams: { filter: { country: this.crudInfo.locatable?.countryId }, include: 'translations' },
             },
           },
           cityId: {
@@ -184,7 +185,7 @@ export default {
                 : false,
               select: { label: 'name', id: 'id' },
               requestParams: {
-                filter: { province_id: this.crudInfo.locatable?.provinceId },
+                filter: { province_id: this.crudInfo.locatable?.provinceId, include: 'translations' },
               },
             },
           },

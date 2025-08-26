@@ -1,7 +1,7 @@
 export default {
   //Home Page
   index: {
-    permission: 'slider.sliders.manage',
+    permission: 'islider.sliders.manage',
     activated: true,
     path: '/slider/index',
     name: 'qslider.admin.sliders',
@@ -14,7 +14,7 @@ export default {
     subHeader: {refresh: true}
   },
   showSlider: {
-    permission: 'slider.sliders.index',
+    permission: 'islider.sliders.index',
     activated: true,
     path: '/slider/show/:id',
     name: 'qslider.admin.sliders.show',
@@ -29,7 +29,7 @@ export default {
     }
   },
   createSlide: {
-    permission: 'slider.sliders.index',
+    permission: 'islider.sliders.index',
     activated: true,
     path: '/slide/create/:sliderId',
     name: 'qslider.admin.slide.create',
@@ -40,7 +40,7 @@ export default {
     authenticated: true,
   },
   updateSlide: {
-    permission: 'slider.sliders.index',
+    permission: 'islider.sliders.index',
     activated: true,
     path: '/slide/update/:sliderId/:id',
     name: 'qslider.admin.slide.update',
