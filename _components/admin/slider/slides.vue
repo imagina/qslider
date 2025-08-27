@@ -111,7 +111,8 @@ export default {
   },
   data() {
     return {
-      loading: false
+      loading: false,
+      mappedSlides: [],
     }
   },
   props: {
@@ -125,19 +126,6 @@ export default {
   emits: ['refresh'],
   watch: {},
   computed: {
-    mappedSlides(){
-      let slides = this.slider.slides || []
-      return slides.map(slide => {
-        let imageUrl = slide.externalImageUrl
-        if(!imageUrl){
-          imageUrl = slide.files.slideimage?.thumbnails?.mediumThumb ?? ''
-        }
-        return {
-          ...slide,
-          imageUrl
-        }
-      })
-    },
     codeAds(){
       if(this.slider.type == 'banner'){
         return {
@@ -155,6 +143,7 @@ export default {
   },
   methods: {
     init() {
+      this.mapSlides()
       this.openEditSlide()
     },
     openEditSlide() {
@@ -164,6 +153,19 @@ export default {
           if (slideToEdit) this.$refs.crudSlide.update(slideToEdit)
         }
       }, 500)
+    },
+    mapSlides(){
+      let slides = this.slider.slides || []
+      this.mappedSlides = slides.map(slide => {
+        let imageUrl = slide.externalImageUrl
+        if(!imageUrl){
+          imageUrl = slide.files.slideimage?.thumbnails?.mediumThumb ?? ''
+        }
+        return {
+          ...slide,
+          imageUrl
+        }
+      })
     },
     hasPermissionRecordMAster(record) {
       let options = record.options || false
@@ -188,12 +190,9 @@ export default {
       console.error(slides)
     },
     updateOrderSlides() {
-      let slides = this.slider.slides.map(slide => ({id: slide.id}))
-      let data = {
-        slider: slides
-      }
+      let data = this.mappedSlides.map((slide, index) => ({id: slide.id, sort_order: index + 1}))
       this.loading = true
-      this.$crud.create('apiRoutes.qslider.orderSlides', data).then(response => {
+      this.$crud.put('apiRoutes.qslider.slidesOrder', {attributes: data}).then(response => {
         this.$alert.success({message: `${this.$tr('isite.cms.message.recordUpdated')}`})
         this.loading = false
       }).catch(error => {

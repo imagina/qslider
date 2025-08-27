@@ -1,15 +1,17 @@
 <template>
-  <div
-    id="pageId"
-    class="q-layout-page layout-padding">
+  <div id="pageId" class="q-layout-page layout-padding">
+    <div class="box box-auto-height q-mb-md">
+      <page-actions :title="$tr($route.meta.title)" @refresh="getSlider(true)" />
+    </div>
+
     <div class="q-mb-lg backend-page">
       <div class="row q-col-gutter-md">
         <div class="col-xs-12 col-md-5">
           <div class="box">
             <div class="row gutter-y-sm">
               <div class="col-12 relative-position">
-                <sliderForm :form-data="slider"/>
-                <inner-loading :visible="loading"/>
+                <sliderForm :form-data="slider" />
+                <inner-loading :visible="loading" />
               </div>
             </div>
           </div>
@@ -18,8 +20,12 @@
           <div class="box">
             <div class="row gutter-y-sm">
               <div class="col-12 relative-position">
-                <sliderSlides :slider="slider" v-if="!loading" @refresh="getSlider(true)"/>
-                <inner-loading :visible="loading"/>
+                <sliderSlides
+                  :slider="slider"
+                  v-if="!loading"
+                  @refresh="getSlider(true)"
+                />
+                <inner-loading :visible="loading" />
               </div>
             </div>
           </div>
@@ -34,35 +40,33 @@
   import sliderSlides from 'modules/qslider/_components/admin/slider/slides'
   import { eventBus } from 'src/plugins/utils'
 
-  export default {
-    components:{
-      sliderForm,
+export default {
+  components: {
+    sliderForm,
       sliderSlides
-    },
-    beforeUnmount () {
-      eventBus.off('deleteSlide', this.getSlider)
-      eventBus.off('page.data.refresh')
-    },
-    mounted() {
+  },
+  beforeUnmount() {
+    eventBus.off('deleteSlide', this.getSlider);
+  },
+  mounted() {
       this.init()
-    },
-    data () {
-      return {
-        loading: false,
+  },
+  data() {
+    return {
+      loading: false,
         slider:{}
       }
+  },
+  methods: {
+    init() {
+      this.getSlider(true)
+      eventBus.on('deleteSlide', this.getSlider)
     },
-    methods:{
-      init(){
-        eventBus.on('page.data.refresh', () => this.getSlider(true))//Listen refresh event
-        this.getSlider(true)
-        eventBus.on('deleteSlide', this.getSlider)
-      },
-      //Get slider data
-      getSlider( refresh = false ){
+    //Get slider data
+    getSlider(refresh = false) {
         let criteria = this.$route.params.id
-        let params = {
-          refresh : refresh,
+      let params = {
+        refresh: refresh,
           params: {include:'slides.translations,slides.files'}
         }
         this.loading = true
@@ -71,12 +75,11 @@
           this.loading = false
         }).catch( error => {
           this.$apiResponse.handleError(error, () => {
-            console.warn(error)
             this.loading = false
             this.$alert.error({message: this.$tr('isite.cms.message.errorRequest'), pos: 'bottom'})
           })
         })
-      },
+    },
     }
   }
 </script>
